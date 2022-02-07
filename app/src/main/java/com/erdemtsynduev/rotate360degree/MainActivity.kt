@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     var playImage = true
     var isReverse = true
     var indexImage = 0
+    var indexImageShoes = 0
     private var x1: Float = 0f
     private var x2: Float = 0f
     private val minDistance = 60
@@ -38,13 +39,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                x1 = event.x
+            MotionEvent.ACTION_DOWN -> {    //Action Down => Finger touched the screen
+                x1 = event.x    //to get touch in the X axes..when user just put down finger on screen...just touched
                 playImage = false
             }
-            MotionEvent.ACTION_UP -> {
-                x2 = event.x
-                val deltaX = x2 - x1
+            MotionEvent.ACTION_UP -> {  //Action Up => User lifted finger up
+                x2 = event.x   //to get touch in the X axes..when user lift up finger
+                val deltaX = x2 - x1 //user lift finger - put down finger => Direction in which user swiped finger
                 val absDeltaX = abs(deltaX)
                 if (absDeltaX > minDistance) {
                     val count = absDeltaX.toInt() / 30
@@ -70,9 +71,14 @@ class MainActivity : AppCompatActivity() {
     private suspend fun rotateRight(count: Int) {
         for (i in 0..count) {
             indexImage--
+            indexImageShoes--
             checkNumberIndex()
+            checkNumberIndexShoes()
             runOnUiThread {
                 Glide.with(this).load(bottlePictureAssets[indexImage])
+                    .placeholder(ivBottle_360.drawable)
+                    .into(ivBottle_360)
+                Glide.with(this).load(shoesPictureAssets[indexImageShoes])
                     .placeholder(ivShoes_360.drawable)
                     .into(ivShoes_360)
             }
@@ -83,9 +89,14 @@ class MainActivity : AppCompatActivity() {
     private suspend fun rotateLeft(count: Int) {
         for (i in 0..count) {
             indexImage++
+            indexImageShoes++
             checkNumberIndex()
+            checkNumberIndexShoes()
             runOnUiThread {
                 Glide.with(this).load(bottlePictureAssets[indexImage])
+                    .placeholder(ivBottle_360.drawable)
+                    .into(ivBottle_360)
+                Glide.with(this).load(shoesPictureAssets[indexImageShoes])
                     .placeholder(ivShoes_360.drawable)
                     .into(ivShoes_360)
             }
@@ -103,13 +114,18 @@ class MainActivity : AppCompatActivity() {
     private suspend fun playImageLikeGif() {
         while (playImage) {
             checkNumberIndex()
+            checkNumberIndexShoes()
             runOnUiThread {
                 Glide.with(this).load(bottlePictureAssets[indexImage])
+                    .placeholder(ivBottle_360.drawable)
+                    .into(ivBottle_360)
+                Glide.with(this).load(shoesPictureAssets[indexImageShoes])
                     .placeholder(ivShoes_360.drawable)
                     .into(ivShoes_360)
             }
             delay(100)
             increaseIndex()
+            increaseIndexShoes()
         }
     }
 
@@ -122,6 +138,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun checkNumberIndexShoes() {
+        if (indexImageShoes < 0) {
+            indexImageShoes = 17
+        } else if (indexImageShoes > 17) {
+            indexImageShoes = 0
+        }
+    }
+
     private fun increaseIndex() {
         if (isReverse) {
             indexImage--
@@ -130,9 +154,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun increaseIndexShoes() {
+        if (isReverse) {
+            indexImageShoes--
+        } else {
+            indexImageShoes++
+        }
+    }
+
     private fun createListAssetsImage() {
         for(i in 2696..2731){
             bottlePictureAssets.add("file:///android_asset/bottle/AVF_${i}.jpg")
+        }
+        /*Taking images from the assert folder*/
+        for (i in 52 downTo 1) {
+            carPictureAssets.add("file:///android_asset/car/${i}.png")
+        }
+        for (i in 1..18) {
+            shoesPictureAssets.add("file:///android_asset/shoes/image1_${i}.jpg")
         }
     }
 }
