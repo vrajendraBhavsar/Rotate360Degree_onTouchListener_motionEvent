@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.erdemtsynduev.rotate360degree.model.DataProvider
+import com.erdemtsynduev.rotate360degree.recyclerView.Image360Adapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -12,18 +14,25 @@ import timber.log.Timber
 import timber.log.Timber.DebugTree
 import kotlin.math.abs
 
+
 class MainActivity : AppCompatActivity() {
 
     private val bottlePictureAssets: ArrayList<String> = ArrayList()
     private val carPictureAssets: ArrayList<String> = ArrayList()
     private val shoesPictureAssets: ArrayList<String> = ArrayList()
+
     var playImage = true
     var isReverse = true
     var indexImage = 0
     var indexImageShoes = 0
+    var indexImageCar = 0
     private var x1: Float = 0f
     private var x2: Float = 0f
     private val minDistance = 60
+
+    private val productAdapter : Image360Adapter by lazy {
+        Image360Adapter(DataProvider.getProductList())
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +45,10 @@ class MainActivity : AppCompatActivity() {
         createListAssetsImage()
         coroutinesStartFunction()
     }
+
+    /*private fun initRecyclerView() {
+        binding.rvLaunchList.adapter = launchListAdapter
+    }*/
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
@@ -72,8 +85,10 @@ class MainActivity : AppCompatActivity() {
         for (i in 0..count) {
             indexImage--
             indexImageShoes--
+            indexImageCar--
             checkNumberIndex()
             checkNumberIndexShoes()
+            checkNumberIndexCar()
             runOnUiThread {
                 Glide.with(this).load(bottlePictureAssets[indexImage])
                     .placeholder(ivBottle_360.drawable)
@@ -81,6 +96,9 @@ class MainActivity : AppCompatActivity() {
                 Glide.with(this).load(shoesPictureAssets[indexImageShoes])
                     .placeholder(ivShoes_360.drawable)
                     .into(ivShoes_360)
+                Glide.with(this).load(carPictureAssets[indexImageCar])
+                    .placeholder(ivCar_360.drawable)
+                    .into(ivCar_360)
             }
             delay(50)
         }
@@ -90,8 +108,10 @@ class MainActivity : AppCompatActivity() {
         for (i in 0..count) {
             indexImage++
             indexImageShoes++
+            indexImageCar++
             checkNumberIndex()
             checkNumberIndexShoes()
+            checkNumberIndexCar()
             runOnUiThread {
                 Glide.with(this).load(bottlePictureAssets[indexImage])
                     .placeholder(ivBottle_360.drawable)
@@ -99,6 +119,9 @@ class MainActivity : AppCompatActivity() {
                 Glide.with(this).load(shoesPictureAssets[indexImageShoes])
                     .placeholder(ivShoes_360.drawable)
                     .into(ivShoes_360)
+                Glide.with(this).load(carPictureAssets[indexImageCar])
+                    .placeholder(ivCar_360.drawable)
+                    .into(ivCar_360)
             }
             delay(50)
         }
@@ -107,7 +130,6 @@ class MainActivity : AppCompatActivity() {
     private fun coroutinesStartFunction() {
         GlobalScope.launch {
             playImageLikeGif()
-
         }
     }
 
@@ -115,6 +137,7 @@ class MainActivity : AppCompatActivity() {
         while (playImage) {
             checkNumberIndex()
             checkNumberIndexShoes()
+            checkNumberIndexCar()
             runOnUiThread {
                 Glide.with(this).load(bottlePictureAssets[indexImage])
                     .placeholder(ivBottle_360.drawable)
@@ -122,10 +145,14 @@ class MainActivity : AppCompatActivity() {
                 Glide.with(this).load(shoesPictureAssets[indexImageShoes])
                     .placeholder(ivShoes_360.drawable)
                     .into(ivShoes_360)
+                Glide.with(this).load(carPictureAssets[indexImageCar])
+                    .placeholder(ivCar_360.drawable)
+                    .into(ivCar_360)
             }
             delay(100)
             increaseIndex()
             increaseIndexShoes()
+            increaseIndexCar()
         }
     }
 
@@ -146,6 +173,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun checkNumberIndexCar() {
+        if (indexImageCar < 0) {
+            indexImageCar = 51
+        } else if (indexImageCar > 51) {
+            indexImageCar = 0
+        }
+    }
+
     private fun increaseIndex() {
         if (isReverse) {
             indexImage--
@@ -159,6 +194,14 @@ class MainActivity : AppCompatActivity() {
             indexImageShoes--
         } else {
             indexImageShoes++
+        }
+    }
+
+    private fun increaseIndexCar() {
+        if (isReverse) {
+            indexImageCar--
+        } else {
+            indexImageCar++
         }
     }
 
