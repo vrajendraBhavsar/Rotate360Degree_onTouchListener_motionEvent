@@ -86,7 +86,7 @@ class Image360Adapter(
 //                                        runBlocking {
                                             rotateRight(count, root.context, v, product)
 //                                        }
-                                        Timber.d("rotateRight = %s", count)
+                                        Timber.d("rotateRight count= %s", count)
                                         Timber.d("Left to Right swipe [Next]")
                                     } else {
 //                                        runBlocking {
@@ -146,7 +146,6 @@ class Image360Adapter(
                     }
                     "car" -> {
                         Glide.with(context)
-                            .asBitmap()
                             .load(product.imageList[indexImageCar])
                             .placeholder(item.ivItem.drawable)
                             .into(item.ivItem)
@@ -161,6 +160,8 @@ class Image360Adapter(
                                 Log.d(this.javaClass.simpleName, "rotateRight: 500 delay") },
                             500
                         )*/
+                        Timber.d("Thread sleep time: 500")
+                        Thread.sleep(500)
                     }
                     "shoes" -> {
                         Glide.with(context)
@@ -175,7 +176,7 @@ class Image360Adapter(
 //                it.ivItem.loadImage(productList[0].imageList[indexImage])
             }
 //            delay(50)
-            Thread.sleep(50)
+//            Thread.sleep(50)
             /*val handler = Handler()
             handler.postDelayed(
                 Runnable { Log.d(this.javaClass.simpleName, "rotateRight: 500 delay") },
