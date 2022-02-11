@@ -2,23 +2,27 @@ package com.erdemtsynduev.rotate360degree.recyclerView
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
 import com.erdemtsynduev.rotate360degree.databinding.SimpleImage360Binding
 import com.erdemtsynduev.rotate360degree.model.Product
-import com.erdemtsynduev.rotate360degree.util.loadImage
 import kotlinx.android.synthetic.main.simple_image_360.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import kotlin.math.abs
 
-class Image360Adapter(private var productList: List<Product>) :
+class Image360Adapter(
+    private var productList: List<Product>
+) :
     RecyclerView.Adapter<Image360Adapter.ImageViewHolder>() {
     var playImage = true
     var isReverse = true
@@ -33,7 +37,8 @@ class Image360Adapter(private var productList: List<Product>) :
     // and return new ViewHolder object containing this layout
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
 //        val view = LayoutInflater.from(parent.context).inflate(R.layout.simple_image_360, parent, false)
-        val binding = SimpleImage360Binding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            SimpleImage360Binding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ImageViewHolder(binding)
     }
 
@@ -55,125 +60,61 @@ class Image360Adapter(private var productList: List<Product>) :
 
             with(simpleImage360Binding) {
                 tvItemLabel.text = product.title
-                ivItem.loadImage(product.imageList[0])
+//                ivItem.loadImage(product.imageList[0])
+                Glide.with(this.root.context).load(product.imageList[0])
+                    .placeholder(ivItem.drawable)
+                    .into(ivItem)
 
-                coroutinesStartFunction(root.context, this.root)
+//                coroutinesStartFunction(root.context, this.root)
 
-                ivItem.setOnTouchListener(object : View.OnTouchListener {
+                cv1.setOnTouchListener(object : View.OnTouchListener {
                     override fun onTouch(v: View?, motionEvent: MotionEvent?): Boolean {
+/*
+                        touchListener.onTouched(v, product)
+*/
+
                         when (motionEvent?.action) {
                             MotionEvent.ACTION_DOWN -> {    //Action Down => Finger touched the screen
-                                x1 = motionEvent.x    //to get touch in the X axes..when user just put down finger on screen...just touched
+                                x1 =
+                                    motionEvent.x    //to get touch in the X axes..when user just put down finger on screen...just touched
                                 playImage = false
                             }
                             MotionEvent.ACTION_UP -> {  //Action Up => User lifted finger up
-                                x2 = motionEvent.x   //to get touch in the X axes..when user lift up finger
-                                val deltaX = x2 - x1 //user lift finger - put down finger => Direction in which user swiped finger
+                                x2 =
+                                    motionEvent.x   //to get touch in the X axes..when user lift up finger
+                                val deltaX =
+                                    x2 - x1 //user lift finger - put down finger => Direction in which user swiped finger
                                 val absDeltaX = abs(deltaX)
                                 if (absDeltaX > minDistance) {
                                     val count = absDeltaX.toInt() / 30
                                     if (x2 > x1) {
-                                        GlobalScope.launch {
-                                            rotateRight(count, root.context, v)
-                                        }
+//                                        runBlocking {
+                                            rotateRight(count, root.context, v, product)
+//                                        }
                                         Timber.d("rotateRight = %s", count)
                                         Timber.d("Left to Right swipe [Next]")
                                     } else {
-                                        GlobalScope.launch {
-                                            rotateLeft(count, root.context, v)
-                                        }
+//                                        runBlocking {
+                                            rotateLeft(count, root.context, v, product)
+//                                        }
                                         Timber.d("rotateLeft = %s", count)
                                         Timber.d("Right to Left swipe [Previous]")
                                     }
                                 }
                             }
                         }
-                        return v?.onTouchEvent(motionEvent) ?: true
+                        return true
                     }
                 })
             }
         }
-//        fun bind(item: Item360) {
-//            with(itemView) {
-//                tvItemLabel.text = item.imgLabel
-////                Glide.with(this).load(shoesPictureAssets[indexImageShoes])
-////                    .placeholder(ivShoes_360.drawable)
-////                    .into(ivShoes_360)
-//                //...
-//                coroutinesStartFunction(simpleImage360Binding.root.context)
-//
-//                ivItem.setOnTouchListener(object : View.OnTouchListener {
-//                    override fun onTouch(v: View?, motionEvent: MotionEvent?): Boolean {
-//                        when (motionEvent?.action) {
-//                            MotionEvent.ACTION_DOWN -> {    //Action Down => Finger touched the screen
-//                                x1 = motionEvent.x    //to get touch in the X axes..when user just put down finger on screen...just touched
-//                                playImage = false
-//                            }
-//                            MotionEvent.ACTION_UP -> {  //Action Up => User lifted finger up
-//                                x2 = motionEvent.x   //to get touch in the X axes..when user lift up finger
-//                                val deltaX = x2 - x1 //user lift finger - put down finger => Direction in which user swiped finger
-//                                val absDeltaX = abs(deltaX)
-//                                if (absDeltaX > minDistance) {
-//                                    val count = absDeltaX.toInt() / 30
-//                                    if (x2 > x1) {
-//                                        GlobalScope.launch {
-//                                            rotateRight(count, context, v)
-//                                        }
-//                                        Timber.d("rotateRight = %s", count)
-//                                        Timber.d("Left to Right swipe [Next]")
-//                                    } else {
-//                                        GlobalScope.launch {
-//                                            rotateLeft(count, context, v)
-//                                        }
-//                                        Timber.d("rotateLeft = %s", count)
-//                                        Timber.d("Right to Left swipe [Previous]")
-//                                    }
-//                                }
-//                            }
-//                        }
-//                        return v?.onTouchEvent(motionEvent) ?: true
-//                    }
-//                })
-//            }
-//        }
 
 
     }
 
     //.........
 
-/*    override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
-        when (event.action) {
-            MotionEvent.ACTION_DOWN -> {    //Action Down => Finger touched the screen
-                x1 = event.x    //to get touch in the X axes..when user just put down finger on screen...just touched
-                playImage = false
-            }
-            MotionEvent.ACTION_UP -> {  //Action Up => User lifted finger up
-                x2 = event.x   //to get touch in the X axes..when user lift up finger
-                val deltaX = x2 - x1 //user lift finger - put down finger => Direction in which user swiped finger
-                val absDeltaX = abs(deltaX)
-                if (absDeltaX > minDistance) {
-                    val count = absDeltaX.toInt() / 30
-                    if (x2 > x1) {
-                        GlobalScope.launch {
-                            rotateRight(count)
-                        }
-                        Timber.d("rotateRight = %s", count)
-                        Timber.d("Left to Right swipe [Next]")
-                    } else {
-                        GlobalScope.launch {
-                            rotateLeft(count)
-                        }
-                        Timber.d("rotateLeft = %s", count)
-                        Timber.d("Right to Left swipe [Previous]")
-                    }
-                }
-            }
-        }
-        return super.onTouchEvent(event)
-    }*/
-
-    private suspend fun rotateRight(count: Int, context: Context, item: View?) {
+    private fun rotateRight(count: Int, context: Context, item: View?, product: Product) {
         for (i in 0..count) {
             indexImage--
             indexImageShoes--
@@ -183,16 +124,39 @@ class Image360Adapter(private var productList: List<Product>) :
             checkNumberIndexCar()
 //            runOnUiThread {
             item?.let {
-                /*Glide.with(context).load(itemList[indexImage].imgBottleList)
-                    .placeholder(item.ivItem.drawable)
-                    .into(it.ivItem)*/
-                it.ivItem.loadImage(productList[0].imageList[indexImage])
+//                runBlocking {
+                    when (product.title) {
+                        "bottle" -> {
+                            Glide.with(context)
+                                .asBitmap()
+                                .load(product.imageList[indexImage])
+                                .placeholder(item.ivItem.drawable)
+                                .into(item.ivItem)
+                        }
+                        "car" -> {
+                            Glide.with(context)
+                                .asBitmap()
+                                .load(product.imageList[indexImageCar])
+                                .placeholder(item.ivItem.drawable)
+                                .into(item.ivItem)
+                        }
+                        "shoes" -> {
+                            Glide.with(context)
+                                .asBitmap()
+                                .load(product.imageList[indexImageShoes])
+                                .placeholder(item.ivItem.drawable)
+                                .into(item.ivItem)
+                        }
+                        else -> Timber.d("rotateRight: Else branch")
+                    }
+//                }
+//                it.ivItem.loadImage(productList[0].imageList[indexImage])
             }
-            delay(50)
+//            delay(50)
         }
     }
 
-    private suspend fun rotateLeft(count: Int, context: Context, item: View?) {
+    private fun rotateLeft(count: Int, context: Context, item: View?, product: Product) {
         for (i in 0..count) {
             indexImage++
             indexImageShoes++
@@ -202,12 +166,50 @@ class Image360Adapter(private var productList: List<Product>) :
             checkNumberIndexCar()
 //            runOnUiThread {
             item?.let {
-                /*Glide.with(context).load(itemList[indexImage].imgBottleList)
-                    .placeholder(item.ivItem.drawable)
-                    .into(it.ivItem)*/
-                it.ivItem.loadImage(productList[0].imageList[indexImage])
+//                runBlocking {
+               /*      var myBitmap = Glide.with(context)
+                         .asBitmap()
+                         .load(product.imageList[0])
+                        .centerCrop()
+                        .into(Target.SIZE_ORIGINAL,Target.SIZE_ORIGINAL)
+                        .get()
+                    imageView.setImageBitmap(myBitmap);*/
+                    when (product.title) {
+                        "bottle" -> {
+                            Glide.with(context)
+                                .asBitmap()
+                                .load(product.imageList[indexImage])
+                                .placeholder(item.ivItem.drawable)
+                                .into(item.ivItem)
+                        }
+                        "car" -> {
+                            Glide.with(context)
+                                .asBitmap()
+                                .load(product.imageList[indexImageCar])
+                                .placeholder(item.ivItem.drawable)
+                                .into(item.ivItem)
+                        }
+                        "shoes" -> {
+                            Glide.with(context)
+                                .asBitmap()
+                                .load(product.imageList[indexImageShoes])
+                                .placeholder(item.ivItem.drawable)
+                                .into(item.ivItem)
+                        }
+                        else -> Timber.d("rotateLeft: Else branch")
+                    }
+//                }
+
+//                it.ivItem.loadImage(productList[0].imageList[indexImage])
+                /*var myBitmap: Bitmap = Glide.with(context)
+                   .load(product.imageList[indexImage])
+                   .asBitmap()
+                   .centerCrop()
+                   .into(Target.SIZE_ORIGINAL,Target.SIZE_ORIGINAL)
+                   .get()
+               imageView.setImageBitmap(myBitmap);*/
             }
-            delay(50)
+//            delay(50)
         }
     }
 
@@ -227,7 +229,7 @@ class Image360Adapter(private var productList: List<Product>) :
                 /*Glide.with(context).load(itemList[indexImage].imgBottleList)
                     .placeholder(item.ivItem.drawable)
                     .into(it.ivItem)*/
-                it.ivItem.loadImage(productList[0].imageList[indexImage])
+//                it.ivItem.loadImage(productList[0].imageList[indexImage])
 
             }
             delay(100)
@@ -285,4 +287,5 @@ class Image360Adapter(private var productList: List<Product>) :
             indexImageCar++
         }
     }
+
 }

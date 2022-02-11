@@ -1,10 +1,17 @@
 package com.erdemtsynduev.rotate360degree
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.erdemtsynduev.rotate360degree.databinding.ActivityMainBinding
 import com.erdemtsynduev.rotate360degree.model.DataProvider
+import com.erdemtsynduev.rotate360degree.model.Product
 import com.erdemtsynduev.rotate360degree.recyclerView.Image360Adapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
@@ -16,6 +23,7 @@ import kotlin.math.abs
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
 
     private val bottlePictureAssets: ArrayList<String> = ArrayList()
     private val carPictureAssets: ArrayList<String> = ArrayList()
@@ -36,18 +44,30 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if (BuildConfig.DEBUG) {
             Timber.plant(DebugTree())
         }
-
         createListAssetsImage()
         coroutinesStartFunction()
+//        initRecyclerView()
     }
 
     /*private fun initRecyclerView() {
-        binding.rvLaunchList.adapter = launchListAdapter
+        val myLayoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
+        // pass it to rvLists layoutManager
+        binding.rv360List.apply {
+            layoutManager = myLayoutManager
+            adapter = productAdapter
+        }
+    }*/
+
+    // interface method to intercept the long click
+    /*@SuppressLint("LogNotTimber")
+    override fun onTouched(view: View?, product: Product) {
+        Log.d("TAG", "Item Touched! ${product.title}, ${product.imageList}")
     }*/
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -209,7 +229,7 @@ class MainActivity : AppCompatActivity() {
         for(i in 2696..2731){
             bottlePictureAssets.add("file:///android_asset/bottle/AVF_${i}.jpg")
         }
-        /*Taking images from the assert folder*/
+//        Taking images from the assert folder
         for (i in 52 downTo 1) {
             carPictureAssets.add("file:///android_asset/car/${i}.png")
         }
