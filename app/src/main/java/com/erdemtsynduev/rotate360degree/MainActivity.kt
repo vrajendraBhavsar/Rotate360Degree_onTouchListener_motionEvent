@@ -3,7 +3,10 @@ package com.erdemtsynduev.rotate360degree
 import android.os.Bundle
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.erdemtsynduev.rotate360degree.databinding.ActivityMainBinding
 import com.erdemtsynduev.rotate360degree.model.DataProvider
 import com.erdemtsynduev.rotate360degree.recyclerView.Image360Adapter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -16,6 +19,7 @@ import kotlin.math.abs
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
 
     private val bottlePictureAssets: ArrayList<String> = ArrayList()
     private val carPictureAssets: ArrayList<String> = ArrayList()
@@ -36,21 +40,28 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if (BuildConfig.DEBUG) {
             Timber.plant(DebugTree())
         }
 
-        createListAssetsImage()
-        coroutinesStartFunction()
+        /*createListAssetsImage()
+        coroutinesStartFunction()*/
+        initRecyclerView()
     }
 
-    /*private fun initRecyclerView() {
-        binding.rvLaunchList.adapter = launchListAdapter
-    }*/
+    private fun initRecyclerView() {
+        val myLayoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
+        // pass it to rvLists layoutManager
+        binding.rv360List.apply {
+            layoutManager = myLayoutManager
+            adapter = productAdapter
+        }
+    }
 
-    override fun onTouchEvent(event: MotionEvent): Boolean {
+    /*override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {    //Action Down => Finger touched the screen
                 x1 = event.x    //to get touch in the X axes..when user just put down finger on screen...just touched
@@ -209,12 +220,12 @@ class MainActivity : AppCompatActivity() {
         for(i in 2696..2731){
             bottlePictureAssets.add("file:///android_asset/bottle/AVF_${i}.jpg")
         }
-        /*Taking images from the assert folder*/
+        *//*Taking images from the assert folder*//*
         for (i in 52 downTo 1) {
             carPictureAssets.add("file:///android_asset/car/${i}.png")
         }
         for (i in 1..18) {
             shoesPictureAssets.add("file:///android_asset/shoes/image1_${i}.jpg")
         }
-    }
+    }*/
 }
