@@ -73,11 +73,34 @@ class Image360Adapter(
 */
                         when (motionEvent?.action) {
                             MotionEvent.ACTION_DOWN -> {    //Action Down => Finger touched the screen
-                                x1 =
-                                    motionEvent.x    //to get touch in the X axes..when user just put down finger on screen...just touched
+                                x1 = motionEvent.x    //to get touch in the X axes..when user just put down finger on screen...just touched
                                 playImage = false
                             }
-                            MotionEvent.ACTION_UP -> {  //Action Up => User lifted finger up
+
+                            MotionEvent.ACTION_MOVE -> {
+                                x2 = motionEvent.x   //to get touch in the X axes..when user lift up finger
+                                val deltaX =
+                                    x2 - x1 //user lift finger - put down finger => Direction in which user swiped finger
+                                val absDeltaX = abs(deltaX)
+                                if (absDeltaX > minDistance) {
+                                    val count = absDeltaX.toInt() / 50 //150
+                                    if (x2 > x1) {
+                                        GlobalScope.launch {
+                                            rotateRight(count, root.context, v, product)
+                                        }
+                                        Timber.d("rotateRight count= %s", count)
+                                        Timber.d("Left to Right swipe [Next]")
+                                    } else {
+                                        GlobalScope.launch {
+                                            rotateLeft(count, root.context, v, product)
+                                        }
+                                        Timber.d("rotateLeft = %s", count)
+                                        Timber.d("Right to Left swipe [Previous]")
+                                    }
+                                }
+                            }
+
+                            /*MotionEvent.ACTION_UP -> {  //Action Up => User lifted finger up
                                 x2 =
                                     motionEvent.x   //to get touch in the X axes..when user lift up finger
                                 val deltaX =
@@ -99,7 +122,7 @@ class Image360Adapter(
                                         Timber.d("Right to Left swipe [Previous]")
                                     }
                                 }
-                            }
+                            }*/
                         }
                         return true
                     }
@@ -113,18 +136,21 @@ class Image360Adapter(
     //.........
 
     private suspend fun rotateRight(count: Int, context: Context, item: View?, product: Product) {
-        for (i in 0..count) {
-            indexImage--
+        for (i in 0..count-4) {
+            /*indexImage--
             indexImageShoes--
             indexImageCar--
             checkNumberIndex()
             checkNumberIndexShoes()
-            checkNumberIndexCar()
+            checkNumberIndexCar()*/
 
             (context as MainActivity).runOnUiThread {
                 item?.let {
                     when (product.title) {
                         "bottle" -> {
+                            indexImage--
+                            checkNumberIndex()
+
                             Glide.with(context)
                                 .asBitmap()
                                 .load(product.imageList[indexImage])
@@ -132,12 +158,19 @@ class Image360Adapter(
                                 .into(item.ivItem)
                         }
                         "car" -> {
+                            indexImageCar--
+                            checkNumberIndexCar()
+
                             Glide.with(context)
+                                .asBitmap()
                                 .load(product.imageList[indexImageCar])
                                 .placeholder(item.ivItem.drawable)
                                 .into(item.ivItem)
                         }
                         "shoes" -> {
+                            indexImageShoes--
+                            checkNumberIndexShoes()
+
                             Glide.with(context)
                                 .asBitmap()
                                 .load(product.imageList[indexImageShoes])
@@ -147,37 +180,39 @@ class Image360Adapter(
                         else -> Timber.d("rotateRight: Else branch")
                     }
                 }
-//                it.ivItem.loadImage(productList[0].imageList[indexImage])
             }
-            delay(60)
+            delay(170)
         }
     }
 
     private suspend fun rotateLeft(count: Int, context: Context, item: View?, product: Product) {
         for (i in 0..count) {
-            indexImage++
-            indexImageShoes++
-            indexImageCar++
-            checkNumberIndex()
-            checkNumberIndexShoes()
-            checkNumberIndexCar()
 
             (context as MainActivity).runOnUiThread {
                 item?.let {
                     when (product.title) {
                         "bottle" -> {
+                            indexImage++
+                            checkNumberIndex()
+
                             Glide.with(context)
                                 .load(product.imageList[indexImage])
                                 .placeholder(item.ivItem.drawable)
                                 .into(item.ivItem)
                         }
                         "car" -> {
+                            indexImageCar++
+                            checkNumberIndexCar()
+
                             Glide.with(context)
                                 .load(product.imageList[indexImageCar])
                                 .placeholder(item.ivItem.drawable)
                                 .into(item.ivItem)
                         }
                         "shoes" -> {
+                            indexImageShoes++
+                            checkNumberIndexShoes()
+
                             Glide.with(context)
                                 .load(product.imageList[indexImageShoes])
                                 .placeholder(item.ivItem.drawable)
@@ -187,7 +222,7 @@ class Image360Adapter(
                     }
                 }
             }
-            delay(60)
+            delay(170)
         }
     }
 
@@ -228,7 +263,7 @@ class Image360Adapter(
 //                it.ivItem.loadImage(productList[0].imageList[indexImage])
                 }
             }
-            delay(170)
+            delay(200)
             increaseIndex()
             increaseIndexShoes()
             increaseIndexCar()
