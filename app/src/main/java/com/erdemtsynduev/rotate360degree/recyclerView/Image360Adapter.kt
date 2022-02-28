@@ -136,14 +136,7 @@ class Image360Adapter(
     //.........
 
     private suspend fun rotateRight(count: Int, context: Context, item: View?, product: Product) {
-        for (i in 0..count-4) {
-            /*indexImage--
-            indexImageShoes--
-            indexImageCar--
-            checkNumberIndex()
-            checkNumberIndexShoes()
-            checkNumberIndexCar()*/
-
+        for (i in 0..count - 4) {
             (context as MainActivity).runOnUiThread {
                 item?.let {
                     when (product.title) {
@@ -316,6 +309,15 @@ class Image360Adapter(
             indexImageCar--
         } else {
             indexImageCar++
+        }
+    }
+
+    private fun inflateGlide(context: Context, item: View, product: Product) {
+        item.let {
+            Glide.with(context)
+                .load(product.imageList[indexImage])
+                .placeholder(item.ivItem.drawable)
+                .into(item.ivItem)
         }
     }
 }
