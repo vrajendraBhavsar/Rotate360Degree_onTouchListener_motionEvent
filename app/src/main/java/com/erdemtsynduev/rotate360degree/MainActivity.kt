@@ -7,14 +7,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.erdemtsynduev.rotate360degree.databinding.ActivityMainBinding
 import com.erdemtsynduev.rotate360degree.model.DataProvider
 import com.erdemtsynduev.rotate360degree.recyclerView.Image360Adapter
+import com.erdemtsynduev.rotate360degree.recyclerView.ProductAdapter
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val productAdapter: Image360Adapter by lazy {
+    /*private val productAdapter: Image360Adapter by lazy {
         Image360Adapter(DataProvider.getProductList())
+    }*/
+    private val productAdapter: ProductAdapter by lazy {
+        ProductAdapter(DataProvider.getProductList())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
