@@ -33,6 +33,7 @@ class ProductAdapter(
         fun bind(product: Product) {
             when(product.title) {
                 "car" -> {
+                    productBinding.tvItemLabel.text = product.title
                     with(productBinding){
                         Glide.with(root.context)
                             .asBitmap()
@@ -42,6 +43,7 @@ class ProductAdapter(
                     }
                 }
                 "bottle" -> {
+                    productBinding.tvItemLabel.text = product.title
                     with(productBinding){
                         Glide.with(root.context)
                             .asBitmap()
@@ -51,6 +53,7 @@ class ProductAdapter(
                     }
                 }
                 "shoes" -> {
+                    productBinding.tvItemLabel.text = product.title
                     with(productBinding){
                         Glide.with(root.context)
                             .asBitmap()
