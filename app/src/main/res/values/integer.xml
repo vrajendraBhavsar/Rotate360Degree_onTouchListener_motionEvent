@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="gradient_angle_45">45</integer>
+    <integer name="anim_duration">400</integer>
+</resources>

@@ -1,40 +1,35 @@
 package com.erdemtsynduev.rotate360degree.recyclerView
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.erdemtsynduev.rotate360degree.common.extensions.toBinding
 import com.erdemtsynduev.rotate360degree.databinding.ProductImageBinding
 import com.erdemtsynduev.rotate360degree.model.Product
-import kotlinx.android.synthetic.main.simple_image_360.view.*
+import com.erdemtsynduev.rotate360degree.ui.common.BaseRecyclerViewAdapter
 
-class ProductAdapter(
-    private var productList: List<Product>
-) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter(val onItemClicked: (product: Product) -> Unit) : BaseRecyclerViewAdapter<Product, ProductAdapter.ProductViewHolder>() {
 
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val binding =
-            ProductImageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ProductViewHolder(binding)
+    override fun createItemViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
+        return ProductViewHolder(parent.toBinding())
     }
 
-    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        holder.bind(productList[position])
-    }
-
-    override fun getItemCount(): Int {
-        return productList.size
+    override fun bindItemViewHolder(holder: ProductViewHolder, position: Int) {
+        holder.bind(items[position])
     }
 
     inner class ProductViewHolder(private val productBinding: ProductImageBinding) :
-        RecyclerView.ViewHolder(productBinding.root) {
+        RecyclerView.ViewHolder(productBinding.root), ItemClickListener {
 
         fun bind(product: Product) {
-            when(product.title) {
+            /*On click of individual item, it's data will be sent to the detail page*/
+            productBinding.cv1.setOnClickListener {
+                this.itemClicked(product = product)
+            }
+            when (product.title) {
                 "car" -> {
                     productBinding.tvItemLabel.text = product.title
-                    with(productBinding){
+                    with(productBinding) {
                         Glide.with(root.context)
                             .asBitmap()
                             .load(product.imageList[0])
@@ -44,7 +39,7 @@ class ProductAdapter(
                 }
                 "bottle" -> {
                     productBinding.tvItemLabel.text = product.title
-                    with(productBinding){
+                    with(productBinding) {
                         Glide.with(root.context)
                             .asBitmap()
                             .load(product.imageList[0])
@@ -54,7 +49,7 @@ class ProductAdapter(
                 }
                 "shoes" -> {
                     productBinding.tvItemLabel.text = product.title
-                    with(productBinding){
+                    with(productBinding) {
                         Glide.with(root.context)
                             .asBitmap()
                             .load(product.imageList[0])
@@ -63,7 +58,15 @@ class ProductAdapter(
                     }
                 }
             }
+//            productBinding.tvItemLabel.setText(product.description)
+        }
+
+        override fun itemClicked(product: Product) {
+            onItemClicked.invoke(product)
         }
     }
 
+    interface ItemClickListener {
+        fun itemClicked(product: Product)
+    }
 }

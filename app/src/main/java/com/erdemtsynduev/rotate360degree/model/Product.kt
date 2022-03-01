@@ -1,18 +1,19 @@
 package com.erdemtsynduev.rotate360degree.model
 
-import java.security.ProtectionDomain
+import android.content.res.Resources
+import android.os.Parcelable
+import androidx.annotation.StringRes
+import com.erdemtsynduev.rotate360degree.R
+import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
-/*data class Item360(
-    var imgLabel: String,
-    var imgShoesList: ArrayList<String>,
-    var imgCarList: ArrayList<String>,
-    var imgBottleList: ArrayList<String>
-)*/
-
+@Serializable
+@Parcelize
 data class Product(
     val title: String,
-    val imageList: ArrayList<String>
-)
+    val imageList: ArrayList<String>,
+    @StringRes val description: Int
+) : Parcelable
 
 object DataProvider {
     fun getProductList(): ArrayList<Product> {
@@ -22,17 +23,17 @@ object DataProvider {
                 for (i in 52 downTo 1) {
                     add("file:///android_asset/car/${i}.png")
                 }
-            }))
+            }, description = R.string.text_car_description))
             add(Product(title = "bottle", imageList = ArrayList<String>().apply {
                 for (i in 2696..2731) {
                     add("file:///android_asset/bottle/AVF_${i}.jpg")
                 }
-            }))
+            }, description =R.string.text_bottle_description))
             add(Product(title = "shoes", imageList = ArrayList<String>().apply {
                 for (i in 1..18) {
                     add("file:///android_asset/shoes/image1_${i}.jpg")
                 }
-            }))
+            }, description = R.string.text_shoes_description))
         }
     }
 }

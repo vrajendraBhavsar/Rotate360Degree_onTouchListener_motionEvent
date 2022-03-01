@@ -1,3 +1,4 @@
+/*
 package com.erdemtsynduev.rotate360degree.recyclerView
 
 import android.annotation.SuppressLint
@@ -11,7 +12,6 @@ import com.bumptech.glide.Glide
 import com.erdemtsynduev.rotate360degree.MainActivity
 import com.erdemtsynduev.rotate360degree.databinding.SimpleImage360Binding
 import com.erdemtsynduev.rotate360degree.model.Product
-import kotlinx.android.synthetic.main.simple_image_360.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -68,9 +68,11 @@ class Image360Adapter(
 
                 cv1.setOnTouchListener(object : View.OnTouchListener {
                     override fun onTouch(v: View?, motionEvent: MotionEvent?): Boolean {
+*/
 /*
                         touchListener.onTouched(v, product)
-*/
+*//*
+
                         when (motionEvent?.action) {
                             MotionEvent.ACTION_DOWN -> {    //Action Down => Finger touched the screen
                                 x1 = motionEvent.x    //to get touch in the X axes..when user just put down finger on screen...just touched
@@ -79,11 +81,10 @@ class Image360Adapter(
 
                             MotionEvent.ACTION_MOVE -> {
                                 x2 = motionEvent.x   //to get touch in the X axes..when user lift up finger
-                                val deltaX =
-                                    x2 - x1 //user lift finger - put down finger => Direction in which user swiped finger
+                                val deltaX = x2 - x1 //user lift finger - put down finger => Direction in which user swiped finger
                                 val absDeltaX = abs(deltaX)
                                 if (absDeltaX > minDistance) {
-                                    val count = absDeltaX.toInt() / 50 //150
+                                    val count = absDeltaX.toInt() / 60 //150
                                     if (x2 > x1) {
                                         GlobalScope.launch {
                                             rotateRight(count, root.context, v, product)
@@ -100,7 +101,8 @@ class Image360Adapter(
                                 }
                             }
 
-                            /*MotionEvent.ACTION_UP -> {  //Action Up => User lifted finger up
+                            */
+/*MotionEvent.ACTION_UP -> {  //Action Up => User lifted finger up
                                 x2 =
                                     motionEvent.x   //to get touch in the X axes..when user lift up finger
                                 val deltaX =
@@ -122,7 +124,8 @@ class Image360Adapter(
                                         Timber.d("Right to Left swipe [Previous]")
                                     }
                                 }
-                            }*/
+                            }*//*
+
                         }
                         return true
                     }
@@ -136,7 +139,7 @@ class Image360Adapter(
     //.........
 
     private suspend fun rotateRight(count: Int, context: Context, item: View?, product: Product) {
-        for (i in 0..count - 4) {
+        for (i in 0..count) {
             (context as MainActivity).runOnUiThread {
                 item?.let {
                     when (product.title) {
@@ -174,7 +177,7 @@ class Image360Adapter(
                     }
                 }
             }
-            delay(170)
+            delay(150)
         }
     }
 
@@ -199,7 +202,7 @@ class Image360Adapter(
 
                             Glide.with(context)
                                 .load(product.imageList[indexImageCar])
-                                .placeholder(item.ivItem.drawable)
+                                .placeholder(item.id..drawable)
                                 .into(item.ivItem)
                         }
                         "shoes" -> {
@@ -320,4 +323,4 @@ class Image360Adapter(
                 .into(item.ivItem)
         }
     }
-}
+}*/
