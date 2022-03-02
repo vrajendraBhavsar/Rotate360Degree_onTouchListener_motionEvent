@@ -4,8 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:clipToPadding="false"
-    android:background="#EFEFEF">
+    android:clipToPadding="false">
 
     <RelativeLayout
         class="androidx.appcompat.app.AlertController$RecycleListView"
@@ -51,8 +50,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </RelativeLayout>
-
         </com.google.android.material.card.MaterialCardView>
-
     </RelativeLayout>
 </RelativeLayout>

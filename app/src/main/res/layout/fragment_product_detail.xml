@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mirage"
+    android:background="@color/light_gray"
     tools:context=".ui.ProductDetailFragment">
 
     <include
@@ -22,13 +22,13 @@
         android:id="@+id/cvCharacterInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dp_30"
-        android:layout_marginTop="@dimen/dp_80"
+        android:layout_marginHorizontal="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
         app:cardCornerRadius="@dimen/dp_10"
         app:cardElevation="@dimen/dp_10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/tbProductDetails">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -42,21 +42,25 @@
                 android:layout_height="@dimen/dp_200"
                 android:scaleType="fitCenter"
                 android:translationZ="@dimen/dp_8"
-                app:imageUrl="@{character.image}"
                 app:layout_constraintBottom_toTopOf="@id/cvCharacterInfo"
                 app:layout_constraintEnd_toEndOf="@id/cvCharacterInfo"
                 app:layout_constraintStart_toStartOf="@id/cvCharacterInfo"
                 app:layout_constraintTop_toTopOf="@+id/cvCharacterInfo"
                 tools:src="@drawable/ic_car_product" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_2"
+                android:layout_marginTop="@dimen/dp_5"
+                android:background="@color/gray" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvProductName"
                 style="@style/TextRobotoBold22"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dp_16"
                 android:layout_marginTop="@dimen/dp_20"
-                android:gravity="center"
+                android:gravity="start"
                 android:textColor="@color/text_description"
                 tools:text="koenigsegg" />
 

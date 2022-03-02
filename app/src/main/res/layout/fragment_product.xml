@@ -7,16 +7,30 @@
     android:background="@color/mirage"
     tools:context=".ui.ProductFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv360List"
-        android:layout_width="0dp"
+    <include
+        android:id="@+id/tbProduct"
+        layout="@layout/custom_toolbar" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:background="@color/light_gray"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/product_image" />
+        app:layout_constraintTop_toBottomOf="@+id/tbProduct">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv360List"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/product_image" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

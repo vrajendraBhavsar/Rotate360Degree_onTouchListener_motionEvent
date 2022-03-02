@@ -1,6 +1,7 @@
 package com.erdemtsynduev.rotate360degree.ui
 
 import android.view.LayoutInflater
+import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.app.miandroidbasestructure.common.extensions.safeNavigate
 import com.erdemtsynduev.rotate360degree.databinding.FragmentProductBinding
@@ -19,8 +20,9 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
 
     override fun initViews() {
         super.initViews()
+        binding.tbProduct.ibBack.visibility = View.GONE
+        setToolbarTitle("Product")
         initRecyclerView()
-        productAdapter.addAll(DataProvider.getProductList())
     }
 
     private val productAdapter: ProductAdapter by lazy {
@@ -37,5 +39,6 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
 
     private fun initRecyclerView() {
         binding.rv360List.adapter = productAdapter
+        productAdapter.addAll(DataProvider.getProductList(), clearPreviousItems = true)
     }
 }
