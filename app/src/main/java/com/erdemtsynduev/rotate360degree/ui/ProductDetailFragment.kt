@@ -2,6 +2,7 @@ package com.erdemtsynduev.rotate360degree.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.view.GestureDetector
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -21,12 +22,12 @@ import kotlin.math.abs
 class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
     var playImage = true
     var isReverse = true
-    var indexImage = 0
+    var indexImageBottle = 0
     var indexImageShoes = 0
     var indexImageCar = 0
     private var x1: Float = 0f
     private var x2: Float = 0f
-    private val minDistance = 60
+    private val minDistance = 80
 
     private val productDetailFragmentArgs: ProductDetailFragmentArgs by navArgs()
 
@@ -60,8 +61,6 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
     private fun init360Image(product: Product) {
         with(this.binding)
         {
-            tvProductName.text = product.title
-//                ivItem.loadImage(product.imageList[0])
             Glide.with(this.root.context).load(product.imageList[0])
                 .placeholder(ivProductImage.drawable)
                 .into(ivProductImage)
@@ -76,12 +75,13 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                             playImage = false
                         }
 
-                        MotionEvent.ACTION_MOVE -> {
+                        MotionEvent.ACTION_UP -> {
                             x2 = motionEvent.x   //to get touch in the X axes..when user lift up finger
                             val deltaX = x2 - x1 //user lift finger - put down finger => Direction in which user swiped finger
                             val absDeltaX = abs(deltaX)
                             if (absDeltaX > minDistance) {
                                 val count = absDeltaX.toInt() / 60 //150
+//                                val count = (countAbs.toDouble() / 2).roundToInt()
                                 if (x2 > x1) {
                                     GlobalScope.launch {
                                         rotateRight(count, root.context, v, product)
@@ -98,7 +98,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                             }
                         }
 
-                        MotionEvent.ACTION_UP -> {  //Action Up => User lifted finger up
+                        /*MotionEvent.ACTION_UP -> {  //Action Up => User lifted finger up
                             x2 =
                                 motionEvent.x   //to get touch in the X axes..when user lift up finger
                             val deltaX =
@@ -120,7 +120,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                                     Timber.d("Right to Left swipe [Previous]")
                                 }
                             }
-                        }
+                        }*/
 
                     }
                     return true
@@ -140,12 +140,12 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                 item?.let {
                     when (product.title) {
                         "bottle" -> {
-                            indexImage--
+                            indexImageBottle--
                             checkNumberIndex()
 
                             Glide.with(context)
                                 .asBitmap()
-                                .load(product.imageList[indexImage])
+                                .load(product.imageList[indexImageBottle])
                                 .placeholder(binding.ivProductImage.drawable)
                                 .into(binding.ivProductImage)
                         }
@@ -173,7 +173,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                     }
                 }
             }
-            delay(150)
+            delay(40)
         }
     }
 
@@ -189,11 +189,11 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                 item?.let {
                     when (product.title) {
                         "bottle" -> {
-                            indexImage++
+                            indexImageBottle++
                             checkNumberIndex()
 
                             Glide.with(context)
-                                .load(product.imageList[indexImage])
+                                .load(product.imageList[indexImageBottle])
                                 .placeholder(binding.ivProductImage.drawable)
                                 .into(binding.ivProductImage)
                         }
@@ -219,7 +219,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                     }
                 }
             }
-            delay(170)
+            delay(40)
         }
     }
 
@@ -239,7 +239,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                     when (product.title) {
                         "bottle" -> {
                             Glide.with(context)
-                                .load(product.imageList[indexImage])
+                                .load(product.imageList[indexImageBottle])
                                 .placeholder(binding.ivProductImage.drawable)
                                 .into(binding.ivProductImage)
                         }
@@ -269,10 +269,10 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
 
 
     private fun checkNumberIndex() {
-        if (indexImage < 0) {
-            indexImage = 35
-        } else if (indexImage > 35) {
-            indexImage = 0
+        if (indexImageBottle < 0) {
+            indexImageBottle = 35
+        } else if (indexImageBottle > 35) {
+            indexImageBottle = 0
         }
     }
 
@@ -294,9 +294,9 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
 
     private fun increaseIndex() {
         if (isReverse) {
-            indexImage--
+            indexImageBottle--
         } else {
-            indexImage++
+            indexImageBottle++
         }
     }
 
@@ -319,7 +319,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
     private fun inflateGlide(context: Context, item: View, product: Product) {
         item.let {
             Glide.with(context)
-                .load(product.imageList[indexImage])
+                .load(product.imageList[indexImageBottle])
                 .placeholder(binding.ivProductImage.drawable)
                 .into(binding.ivProductImage)
         }
