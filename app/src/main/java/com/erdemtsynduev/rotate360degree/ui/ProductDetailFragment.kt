@@ -207,7 +207,6 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                                     .into(binding.ivProductImage)
                             }
                         }
-
                     }
 
                     override fun onStartTrackingTouch(seekBar: SeekBar?) {
