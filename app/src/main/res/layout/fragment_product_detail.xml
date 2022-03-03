@@ -48,6 +48,19 @@
                 app:layout_constraintTop_toTopOf="@+id/cvCharacterInfo"
                 tools:src="@drawable/ic_car_product" />
 
+            <SeekBar
+                android:id="@+id/sbImgRotation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:thumbTint="@color/mirage_dark"
+                android:progressTint="@color/neon_orange"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:max="10"
+                android:progress="0"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_2"
