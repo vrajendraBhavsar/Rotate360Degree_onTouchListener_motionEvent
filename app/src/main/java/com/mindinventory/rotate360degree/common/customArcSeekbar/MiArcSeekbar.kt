@@ -43,7 +43,12 @@ class MiArcSeekbar @JvmOverloads constructor(
             invalidate()
         }
 
-    var progressWidth: Float = a.useOrDefault(4 * context.resources.displayMetrics.density) { getDimension(R.styleable.ArcSeekBar_progressWidth, it) }
+/*    var progressWidth: Float = a.useOrDefault(4 * context.resources.displayMetrics.density) { getDimension(R.styleable.ArcSeekBar_progressWidth, it) }
+        set(value) {
+            field = value
+            progressPaint.strokeWidth = value
+        }*/
+    var progressWidth: Float = a.useOrDefault(2F) { getDimension(R.styleable.ArcSeekBar_progressWidth, it) }
         set(value) {
             field = value
             progressPaint.strokeWidth = value
@@ -130,12 +135,14 @@ class MiArcSeekbar @JvmOverloads constructor(
 
     @SuppressLint("DrawAllocation")
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val height = View.getDefaultSize(suggestedMinimumHeight, heightMeasureSpec)
-        val width = View.getDefaultSize(suggestedMinimumWidth, widthMeasureSpec)
-        val dx = maxOf(thumb.intrinsicWidth.toFloat() / 2, this.progressWidth) + 2
-        val dy = maxOf(thumb.intrinsicHeight.toFloat() / 2, this.progressWidth) + 2
-        val realWidth = width.toFloat() - 2 * dx - paddingLeft - paddingRight
-        val realHeight = minOf(height.toFloat() - 2 * dy - paddingTop - paddingBottom, realWidth / 2)
+//        val height = View.getDefaultSize(suggestedMinimumHeight, heightMeasureSpec) //210
+        val height = View.getDefaultSize(suggestedMinimumHeight, heightMeasureSpec) //210
+        val width = View.getDefaultSize(suggestedMinimumWidth, widthMeasureSpec) //924
+        val dx = maxOf(thumb.intrinsicWidth.toFloat() / 2, this.progressWidth) + 2//69.5
+        val dy = maxOf(thumb.intrinsicHeight.toFloat() / 2, this.progressWidth) + 2//69.5
+        val realWidth = width.toFloat() - 2 * dx - paddingLeft - paddingRight //785
+        val realHeight = minOf(height.toFloat() - 2 * dy - paddingTop - paddingBottom, realWidth / 2) //71
+//        val realHeight = 71F //71
         drawData = MiArcSeekBarData(dx + paddingLeft, dy + paddingTop, realWidth, realHeight, progress, maxProgress)
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }

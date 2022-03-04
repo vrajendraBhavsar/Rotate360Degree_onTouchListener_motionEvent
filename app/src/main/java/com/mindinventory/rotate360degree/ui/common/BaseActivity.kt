@@ -77,7 +77,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     private fun handleNetworkStatusLiveEvent(networkStatus: NetworkStatus) {
         when (networkStatus) {
             NetworkStatus.NETWORK_ON -> dismissNoInternetDialog()
-            NetworkStatus.NETWORK_OFF -> showNoInternetDialog()
+//            NetworkStatus.NETWORK_OFF -> showNoInternetDialog()
         }
     }
 
@@ -117,7 +117,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.M)
     private fun checkNetworkAndShowNoInternetDialog() {
         if (connectivityManager.activeNetwork == null) {
-            showNoInternetDialog()
+//            showNoInternetDialog()
         }
     }
 
