@@ -18,6 +18,7 @@
     <color name="mirage">#1d2335</color>
     <color name="mirage_dark">#181d2d</color>
     <color name="neon_orange">#FF5F1F</color>
+    <color name="mirage_less_opacity">#7E1D2335</color>
 
     <!--Blue-->
     <color name="blue_2072d8">#2072d8</color>

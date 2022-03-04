@@ -233,39 +233,69 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
 //                    }
 //                }
 //                progressListener.invoke(0)
+//                binding.sbImgRotation.onProgressChangedListener = progressListener
                 //..................
 
-
-
-
-                /*binding.sbImgRotation.setOnProgressChangedListener(progressListener)
-
-                    object : SeekBar.OnSeekBarChangeListener{
-                    override fun onProgressChanged(
-                        seekBar: SeekBar?,
-                        progress: Int,
-                        fromUser: Boolean
-                    ) {
-                        Toast.makeText(requireContext(), "discrete seekbar progress: $progress", Toast.LENGTH_SHORT).show()
-                        if (progress > 0 && progress < product.imageList.size) {
-                            context?.let {
-                                Glide.with(it)
-                                    .asBitmap()
-                                    .load(product.imageList[progress])
-                                    .placeholder(binding.ivProductImage.drawable)
-                                    .into(binding.ivProductImage)
+                sbImgRotation.maxProgress = product.imageList.size
+                val progressListener =
+                    object : ProgressListener {
+                        override fun invoke(progress: Int) {
+                            Log.i("SeekBar", "Value is $progress")
+//                            Toast.makeText(requireContext(), "Arc seekbar progress: $progress", Toast.LENGTH_SHORT).show()
+                            if (progress > 0 && progress < product.imageList.size) {
+                                context?.let {
+                                    Glide.with(it)
+                                        .asBitmap()
+                                        .load(product.imageList[progress])
+                                        .placeholder(binding.ivProductImage.drawable)
+                                        .into(binding.ivProductImage)
+                                }
                             }
                         }
                     }
+                progressListener.invoke(0)
+                sbImgRotation.onProgressChangedListener = (progressListener)
 
-                    override fun onStartTrackingTouch(seekBar: SeekBar?) {
 
-                    }
+//                binding.sbImgRotation.onProgressChangedListener(progressListener {
+//                    Toast.makeText(requireContext(), "discrete seekbar progress: $progress", Toast.LENGTH_SHORT).show()
+//                    if (progress > 0 && progress < product.imageList.size) {
+//                        context?.let {
+//                            Glide.with(it)
+//                                .asBitmap()
+//                                .load(product.imageList[progress])
+//                                .placeholder(binding.ivProductImage.drawable)
+//                                .into(binding.ivProductImage)
+//                        }
+//                    }
+//                })
 
-                    override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
-                    }
-                })*/
+//                    object : SeekBar.OnSeekBarChangeListener{
+//                    override fun onProgressChanged(
+//                        seekBar: SeekBar?,
+//                        progress: Int,
+//                        fromUser: Boolean
+//                    ) {
+//                        Toast.makeText(requireContext(), "discrete seekbar progress: $progress", Toast.LENGTH_SHORT).show()
+//                        if (progress > 0 && progress < product.imageList.size) {
+//                            context?.let {
+//                                Glide.with(it)
+//                                    .asBitmap()
+//                                    .load(product.imageList[progress])
+//                                    .placeholder(binding.ivProductImage.drawable)
+//                                    .into(binding.ivProductImage)
+//                            }
+//                        }
+//                    }
+//
+//                    override fun onStartTrackingTouch(seekBar: SeekBar?) {
+//
+//                    }
+//
+//                    override fun onStopTrackingTouch(seekBar: SeekBar?) {
+//
+//                    }
+//                })
             }
 
 /*            cvCharacterInfo.setOnTouchListener(object : View.OnTouchListener {

@@ -61,12 +61,11 @@
                 android:max="10"
                 android:progress="0" />-->
 
-            <com.marcinmoskala.arcseekbar.ArcSeekBar
+            <com.mindinventory.rotate360degree.common.customArcSeekbar.MiArcSeekbar
                 android:id="@+id/sbImgRotation"
                 app:thumb="@drawable/thumb"
-                app:progressColor="@color/neon_orange"
+                app:progressColor="@color/mirage"
                 app:progressBackgroundColor="@color/mirage"
-                app:progressBackgroundWidth="@dimen/dp_10"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_70" />
 
