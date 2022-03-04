@@ -2,14 +2,15 @@ package com.mindinventory.rotate360degree.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.SeekBar
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.mindinventory.rotate360degree.MainActivity
+import com.mindinventory.rotate360degree.common.customArcSeekbar.ProgressListener
 import com.mindinventory.rotate360degree.databinding.FragmentProductDetailBinding
 import com.mindinventory.rotate360degree.model.Product
 import com.mindinventory.rotate360degree.ui.common.BaseFragment
@@ -186,8 +187,8 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
             })*/
 
             GlobalScope.launch {
-                sbImgRotation.max = product.imageList.size
-                sbImgRotation.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+                /*sbImgRotation.maxProgress = product.imageList.size*/
+/*                sbImgRotation.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
                     override fun onProgressChanged(
                         seekBar: SeekBar?,
                         progress: Int,
@@ -212,7 +213,59 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                     override fun onStopTrackingTouch(seekBar: SeekBar?) {
 
                     }
-                })
+                })*/
+//                sbImgRotation.onProgressChangedListener(object : )
+
+                //..............
+//                val progressListener = object : ProgressListener {
+//                    override fun invoke(progress: Int) {
+//                        Log.i("SeekBar", "Value is $progress")
+//                        Toast.makeText(requireContext(), "discrete seekbar progress: $progress", Toast.LENGTH_SHORT).show()
+//                        if (progress > 0 && progress < product.imageList.size) {
+//                            context?.let {
+//                                Glide.with(it)
+//                                    .asBitmap()
+//                                    .load(product.imageList[progress])
+//                                    .placeholder(binding.ivProductImage.drawable)
+//                                    .into(binding.ivProductImage)
+//                            }
+//                        }
+//                    }
+//                }
+//                progressListener.invoke(0)
+                //..................
+
+
+
+
+                /*binding.sbImgRotation.setOnProgressChangedListener(progressListener)
+
+                    object : SeekBar.OnSeekBarChangeListener{
+                    override fun onProgressChanged(
+                        seekBar: SeekBar?,
+                        progress: Int,
+                        fromUser: Boolean
+                    ) {
+                        Toast.makeText(requireContext(), "discrete seekbar progress: $progress", Toast.LENGTH_SHORT).show()
+                        if (progress > 0 && progress < product.imageList.size) {
+                            context?.let {
+                                Glide.with(it)
+                                    .asBitmap()
+                                    .load(product.imageList[progress])
+                                    .placeholder(binding.ivProductImage.drawable)
+                                    .into(binding.ivProductImage)
+                            }
+                        }
+                    }
+
+                    override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+                    }
+
+                    override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+                    }
+                })*/
             }
 
 /*            cvCharacterInfo.setOnTouchListener(object : View.OnTouchListener {

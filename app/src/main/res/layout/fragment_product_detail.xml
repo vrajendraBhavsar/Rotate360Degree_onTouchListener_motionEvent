@@ -11,12 +11,12 @@
         android:id="@+id/tbProductDetails"
         layout="@layout/custom_toolbar" />
 
-<!--    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/glMiddle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.35" />-->
+    <!--    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glMiddle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.35" />-->
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cvCharacterInfo"
@@ -48,10 +48,10 @@
                 app:layout_constraintTop_toTopOf="@+id/cvCharacterInfo"
                 tools:src="@drawable/ic_car_product" />
 
-            <SeekBar
+<!--            <com.marcinmoskala.arcseekbar.ArcSeekBar
                 android:id="@+id/sbImgRotation"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dp_150"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:thumbTint="@color/mirage_dark"
@@ -59,7 +59,16 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:max="10"
-                android:progress="0"/>
+                android:progress="0" />-->
+
+            <com.marcinmoskala.arcseekbar.ArcSeekBar
+                android:id="@+id/sbImgRotation"
+                app:thumb="@drawable/thumb"
+                app:progressColor="@color/neon_orange"
+                app:progressBackgroundColor="@color/mirage"
+                app:progressBackgroundWidth="@dimen/dp_10"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_70" />
 
             <View
                 android:layout_width="match_parent"
@@ -77,7 +86,7 @@
                 android:textColor="@color/text_description"
                 tools:text="koenigsegg" />
 
-<!--            <androidx.appcompat.widget.AppCompatTextView
+            <!--<androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvCharacterSpecies"
                 style="@style/TextRobotoBold22"
                 android:layout_width="match_parent"
