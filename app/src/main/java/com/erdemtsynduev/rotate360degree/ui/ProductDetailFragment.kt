@@ -197,7 +197,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                         progress: Int,
                         fromUser: Boolean
                     ) {
-                        Toast.makeText(requireContext(), "discrete seekbar progress: $progress", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(requireContext(), "discrete seekbar progress: $progress", Toast.LENGTH_SHORT).show()
                         if (progress > 0 && progress < product.imageList.size) {
                             context?.let {
                                 Glide.with(it)

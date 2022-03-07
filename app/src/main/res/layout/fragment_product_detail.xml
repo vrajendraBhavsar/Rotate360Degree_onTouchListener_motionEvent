@@ -11,12 +11,12 @@
         android:id="@+id/tbProductDetails"
         layout="@layout/custom_toolbar" />
 
-<!--    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/glMiddle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.35" />-->
+    <!--    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glMiddle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.35" />-->
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cvCharacterInfo"
@@ -52,14 +52,15 @@
                 android:id="@+id/sbImgRotation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:thumbTint="@color/mirage_dark"
-                android:progressTint="@color/neon_orange"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:max="10"
-                android:progress="0"/>
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:progress="0"
+                android:progressTint="@color/mirage"
+                android:progressBackgroundTint="@color/mirage"
+                android:thumb="@drawable/thumb_style"
+                android:thumbOffset="15dp" />
 
             <View
                 android:layout_width="match_parent"
@@ -77,17 +78,17 @@
                 android:textColor="@color/text_description"
                 tools:text="koenigsegg" />
 
-<!--            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvCharacterSpecies"
-                style="@style/TextRobotoBold22"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_8"
-                android:layout_marginBottom="@dimen/dp_16"
-                android:gravity="center"
-                android:text=""
-                android:textColor="@color/text_description"
-                tools:text="Human" />-->
+            <!--            <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvCharacterSpecies"
+                            style="@style/TextRobotoBold22"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_8"
+                            android:layout_marginBottom="@dimen/dp_16"
+                            android:gravity="center"
+                            android:text=""
+                            android:textColor="@color/text_description"
+                            tools:text="Human" />-->
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvProductDescription"
