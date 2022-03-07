@@ -11,6 +11,8 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.mindinventory.rotate360degree.MainActivity
 import com.mindinventory.rotate360degree.common.customArcSeekbar.ProgressListener
+import com.mindinventory.rotate360degree.common.customSeekbarDevAdvance.CircularSeekBar
+import com.mindinventory.rotate360degree.common.customSeekbarDevAdvance.CircularSeekBar.OnCircularSeekBarChangeListener
 import com.mindinventory.rotate360degree.databinding.FragmentProductDetailBinding
 import com.mindinventory.rotate360degree.model.Product
 import com.mindinventory.rotate360degree.ui.common.BaseFragment
@@ -19,6 +21,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
+
 
 class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
     private val TAG: String = ProductDetailFragment::class.java.simpleName
@@ -235,8 +238,8 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
 //                progressListener.invoke(0)
 //                binding.sbImgRotation.onProgressChangedListener = progressListener
                 //..................
-
-                sbImgRotation.maxProgress = product.imageList.size
+/*
+                sbImgRotation.max = product.imageList.size
                 val progressListener =
                     object : ProgressListener {
                         override fun invoke(progress: Int) {
@@ -254,7 +257,36 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                         }
                     }
                 progressListener.invoke(0)
-                sbImgRotation.onProgressChangedListener = (progressListener)
+                sbImgRotation.progress = (50)*/
+                //.............................
+                sbImgRotation.max = product.imageList.size
+                class CircleSeekBarListener : OnCircularSeekBarChangeListener {
+                    override fun onProgressChanged(
+                        circularSeekBar: CircularSeekBar?,
+                        progress: Int,
+                        fromUser: Boolean
+                    ) {
+                        Toast.makeText(requireContext(), "discrete seekbar progress: $progress", Toast.LENGTH_SHORT).show()
+                        if (progress > 0 && progress < product.imageList.size) {
+                            context?.let {
+                                Glide.with(it)
+                                    .asBitmap()
+                                    .load(product.imageList[progress])
+                                    .placeholder(binding.ivProductImage.drawable)
+                                    .into(binding.ivProductImage)
+                            }
+                        }
+                    }
+
+                    override fun onStopTrackingTouch(seekBar: CircularSeekBar?) {
+
+                    }
+
+                    override fun onStartTrackingTouch(seekBar: CircularSeekBar?) {
+
+                    }
+                }
+                sbImgRotation.setOnSeekBarChangeListener(CircleSeekBarListener())
 
 
 //                binding.sbImgRotation.onProgressChangedListener(progressListener {

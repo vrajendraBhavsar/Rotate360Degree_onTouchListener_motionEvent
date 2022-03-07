@@ -61,13 +61,28 @@
                 android:max="10"
                 android:progress="0" />-->
 
-            <com.mindinventory.rotate360degree.common.customArcSeekbar.MiArcSeekbar
+<!--            <com.mindinventory.rotate360degree.common.customArcSeekbar.MiArcSeekbar
                 android:id="@+id/sbImgRotation"
                 app:thumb="@drawable/thumb"
                 app:progressColor="@color/mirage"
                 app:progressBackgroundColor="@color/mirage"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content" />-->
+
+            <com.mindinventory.rotate360degree.common.customSeekbarDevAdvance.CircularSeekBar
+                android:id="@+id/sbImgRotation"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_150"
+                app:start_angle="0"
+                app:end_angle="-180"
+                app:circle_x_radius="@dimen/dp_300"
+                app:circle_y_radius="@dimen/dp_50"
+                app:maintain_equal_circle="false"
+                app:use_custom_radii="true"
+                app:pointer_alpha_ontouch="100"
+                app:pointer_color="@color/white"
+                app:pointer_halo_color="@color/mirage_dark"
+                />
 
             <View
                 android:layout_width="match_parent"

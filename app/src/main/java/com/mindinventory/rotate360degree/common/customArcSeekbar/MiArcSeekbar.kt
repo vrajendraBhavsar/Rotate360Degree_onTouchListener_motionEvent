@@ -1,3 +1,4 @@
+/*
 package com.mindinventory.rotate360degree.common.customArcSeekbar
 
 import android.annotation.SuppressLint
@@ -43,11 +44,13 @@ class MiArcSeekbar @JvmOverloads constructor(
             invalidate()
         }
 
+*/
 /*    var progressWidth: Float = a.useOrDefault(4 * context.resources.displayMetrics.density) { getDimension(R.styleable.ArcSeekBar_progressWidth, it) }
         set(value) {
             field = value
             progressPaint.strokeWidth = value
-        }*/
+        }*//*
+
     var progressWidth: Float = a.useOrDefault(2F) { getDimension(R.styleable.ArcSeekBar_progressWidth, it) }
         set(value) {
             field = value
@@ -209,4 +212,4 @@ class MiArcSeekbar @JvmOverloads constructor(
     }
 
     fun <T, R> T?.useOrDefault(default: R, usage: T.(R) -> R) = if (this == null) default else usage(default)
-}
+}*/
