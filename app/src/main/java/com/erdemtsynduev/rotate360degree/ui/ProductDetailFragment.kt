@@ -73,7 +73,9 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                 .placeholder(ivProductImage.drawable)
                 .into(ivProductImage)
 
+            /*
             coroutinesStartFunction(root.context, this.root, product)
+            */
 
             /*val gestureListener = object : GestureDetector.SimpleOnGestureListener() {
                 override fun onShowPress(event: MotionEvent?) {
@@ -378,7 +380,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
 
     private fun coroutinesStartFunction(context: Context, item: View?, product: Product) {
         GlobalScope.launch {
-//            playImageLikeGif(context, item, product)
+            playImageLikeGif(context, item, product)
         }
     }
 

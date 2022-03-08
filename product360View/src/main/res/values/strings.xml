@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Rotate 360 degree</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--No Internet Dialog-->
+    <string name="text_retry">Retry</string>
+
+    <!--Product description-->
+    <string name="text_shoes_description">Nike is the world’s largest supplier of athletic shoes and apparel and a major manufacturer of sports equipment. Founded in 1964, the company has grown to become the most valuable brand among sports businesses, valued at $29.6 billion as of 2017.</string>
+    <string name="text_bottle_description">Wine is one of the most civilized things in the world and one of the most natural things of the world that has been brought to the greatest perfection, and it offers a greater range for enjoyment and appreciation than, possibly, any other purely sensory thing.</string>
+    <string name="text_car_description">The journey of Koenigsegg, since inception, is truly incredible. It all started on August 12th 1994 when a young man, aged 22, set out to realize his childhood dream. A young man fuelled by passion, ingenuity and mind-bending will.
+Christian von Koenigsegg had just made up his mind to live his dream and start his own car company. The odds were stacked against him. It was a now or never moment.</string>
+</resources>
