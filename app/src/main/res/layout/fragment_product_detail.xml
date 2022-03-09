@@ -18,4 +18,68 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.35" />-->
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvCharacterInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        app:cardCornerRadius="@dimen/dp_10"
+        app:cardElevation="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tbProductDetails">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.example.product360view.presentation.productDetail.CustomSeekbarView
+                android:id="@+id/customSeekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_2"
+                android:layout_marginHorizontal="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_5"
+                android:background="@color/gray" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvProductName"
+                style="@style/TextRobotoBold22"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_20"
+                android:gravity="start"
+                android:textColor="@color/text_description"
+                tools:text="koenigsegg" />
+
+            <!--            <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvCharacterSpecies"
+                            style="@style/TextRobotoBold22"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_8"
+                            android:layout_marginBottom="@dimen/dp_16"
+                            android:gravity="center"
+                            android:text=""
+                            android:textColor="@color/text_description"
+                            tools:text="Human" />-->
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvProductDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginBottom="@dimen/dp_16"
+                android:text="@string/text_bottle_description"
+                android:textColor="@color/text_description" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

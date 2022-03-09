@@ -1,7 +1,6 @@
-package com.example.product360view.domain.common.image
+package com.example.product360view.domain.image
 
 import android.graphics.Color
-import android.os.Parcel
 import android.os.Parcelable
 import androidx.annotation.DrawableRes
 import com.example.product360view.R
@@ -37,13 +36,5 @@ data class ImageConfig(
         fun getConfig(): ImageConfig {
             return mediaPickerConfig
         }
-    }
-
-    override fun describeContents(): Int {
-        TODO("Not yet implemented")
-    }
-
-    override fun writeToParcel(p0: Parcel?, p1: Int) {
-        TODO("Not yet implemented")
     }
 }

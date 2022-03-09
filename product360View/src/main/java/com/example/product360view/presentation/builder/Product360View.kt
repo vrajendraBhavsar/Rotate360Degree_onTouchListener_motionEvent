@@ -1,12 +1,11 @@
 package com.example.product360view.presentation.builder
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
-import com.example.product360view.domain.common.image.ImageConfig
+import com.example.product360view.domain.image.ImageConfig
 
 
 class Product360View(private val context: Context) {

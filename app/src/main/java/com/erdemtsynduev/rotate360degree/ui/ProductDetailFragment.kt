@@ -1,39 +1,26 @@
 package com.erdemtsynduev.rotate360degree.ui
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.util.Log
-import android.view.GestureDetector
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
-import android.widget.SeekBar
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
-import com.erdemtsynduev.rotate360degree.MainActivity
 import com.erdemtsynduev.rotate360degree.databinding.FragmentProductDetailBinding
 import com.erdemtsynduev.rotate360degree.model.Product
 import com.erdemtsynduev.rotate360degree.ui.common.BaseFragment
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import timber.log.Timber
-import java.lang.Math.abs
+import com.example.product360view.presentation.productDetail.CustomSeekbarView
 
 class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
     private val TAG: String = ProductDetailFragment::class.java.simpleName
-    var playImage = true
-    var isReverse = true
-    var indexImageBottle = 0
-    var indexImageShoes = 0
-    var indexImageCar = 0
-    private var x1: Float = 0f
-    private var x2: Float = 0f
-    private var tempX2: Float = 0f
-    private val minDistance = 80
+//    var playImage = true
+//    var isReverse = true
+//    var indexImageBottle = 0
+//    var indexImageShoes = 0
+//    var indexImageCar = 0
+//    private var x1: Float = 0f
+//    private var x2: Float = 0f
+//    private var tempX2: Float = 0f
+//    private val minDistance = 80
 
     private val productDetailFragmentArgs: ProductDetailFragmentArgs by navArgs()
 
@@ -45,11 +32,23 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
 
     override fun initViews() {
         super.initViews()
+        Log.d(TAG, "HASTALAVISTA initViews: ")
+        init360Image(product = productDetailFragmentArgs.product)
         binding.tbProductDetails.ibBack.setOnClickListener(::navigateToProductFragment)
         setToolbarTitle("Product Detail")
         bindData()
 //        setUpGestureDetector()
-        init360Image(product = productDetailFragmentArgs.product)
+//        init360Image(product = productDetailFragmentArgs.product)
+    }
+
+    private fun init360Image(product: Product) {
+        with(this.binding) {
+            Log.d(
+                TAG,
+                "init360Image: HASTALAVISTA imageList being passed using setImageList() call"
+            )
+            customSeekBar.setImageList(CustomSeekbarView.DataProvider.getCarImageList())
+        }
     }
 
     private fun navigateToProductFragment(view: View?) {
@@ -64,7 +63,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
 
     //...
 
-    @OptIn(DelicateCoroutinesApi::class)
+/*    @OptIn(DelicateCoroutinesApi::class)
     @SuppressLint("ClickableViewAccessibility")
     private fun init360Image(product: Product) {
         with(this.binding)
@@ -73,11 +72,11 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                 .placeholder(ivProductImage.drawable)
                 .into(ivProductImage)
 
-            /*
+            *//*
             coroutinesStartFunction(root.context, this.root, product)
-            */
+            *//*
 
-            /*val gestureListener = object : GestureDetector.SimpleOnGestureListener() {
+            *//*val gestureListener = object : GestureDetector.SimpleOnGestureListener() {
                 override fun onShowPress(event: MotionEvent?) {
                 }
 
@@ -120,9 +119,9 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                     return true
                 }
 
-                *//*fun MotionEvent?.description(description: String): String {
+                *//**//*fun MotionEvent?.description(description: String): String {
                     return if (this == null) "Empty press" else "$description at (${x.round()}, ${y.round()})"
-                }*//*
+                }*//**//*
             }
             val gestureDetector = GestureDetector(requireContext(), gestureListener)
 
@@ -162,7 +161,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                             }
                         }
 
-                        *//*MotionEvent.ACTION_UP -> {  //Action Up => User lifted finger up
+                        *//**//*MotionEvent.ACTION_UP -> {  //Action Up => User lifted finger up
                             x2 =
                                 motionEvent.x   //to get touch in the X axes..when user lift up finger
                             val deltaX =
@@ -184,12 +183,12 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                                     Timber.d("Right to Left swipe [Previous]")
                                 }
                             }
-                        }*//*
+                        }*//**//*
 
                     }
                     return gestureDetector.onTouchEvent(motionEvent)
                 }
-            })*/
+            })*//*
 
             GlobalScope.launch {
                 sbImgRotation.max = product.imageList.size
@@ -222,7 +221,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                 })
             }
 
-/*            cvCharacterInfo.setOnTouchListener(object : View.OnTouchListener {
+*//*            cvCharacterInfo.setOnTouchListener(object : View.OnTouchListener {
                 override fun onTouch(v: View?, motionEvent: MotionEvent?): Boolean {
                     when (motionEvent?.action) {
                         MotionEvent.ACTION_DOWN -> {    //Action Down => Finger touched the screen
@@ -253,7 +252,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                             }
                         }
 
-                        *//*MotionEvent.ACTION_UP -> {  //Action Up => User lifted finger up
+                        *//**//*MotionEvent.ACTION_UP -> {  //Action Up => User lifted finger up
                             x2 =
                                 motionEvent.x   //to get touch in the X axes..when user lift up finger
                             val deltaX =
@@ -275,222 +274,222 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                                     Timber.d("Right to Left swipe [Previous]")
                                 }
                             }
-                        }*//*
+                        }*//**//*
 
                     }
                     return true
                 }
-            })*/
+            })*//*
         }
-    }
-
-    private suspend fun rotateRight(
-        count: Int,
-        context: Context,
-        item: View?,
-        product: Product
-    ) {
-        for (i in 0..count) {
-            (context as MainActivity).runOnUiThread {
-                item?.let {
-                    when (product.title) {
-                        "bottle" -> {
-                            indexImageBottle--
-                            checkNumberIndex()
-
-                            Glide.with(context)
-                                .asBitmap()
-                                .load(product.imageList[indexImageBottle])
-                                .placeholder(binding.ivProductImage.drawable)
-                                .into(binding.ivProductImage)
-                        }
-                        "car" -> {
-                            indexImageCar--
-                            checkNumberIndexCar()
-
-                            Glide.with(context)
-                                .asBitmap()
-                                .load(product.imageList[indexImageCar])
-                                .placeholder(binding.ivProductImage.drawable)
-                                .into(binding.ivProductImage)
-                        }
-                        "shoes" -> {
-                            indexImageShoes--
-                            checkNumberIndexShoes()
-
-                            Glide.with(context)
-                                .asBitmap()
-                                .load(product.imageList[indexImageShoes])
-                                .placeholder(binding.ivProductImage.drawable)
-                                .into(binding.ivProductImage)
-                        }
-                        else -> Timber.d("rotateRight: Else branch")
-                    }
-                }
-            }
-            delay(40)
-        }
-    }
-
-    private suspend fun rotateLeft(
-        count: Int,
-        context: Context,
-        item: View?,
-        product: Product
-    ) {
-        for (i in 0..count) {
-
-            (context as MainActivity).runOnUiThread {
-                item?.let {
-                    when (product.title) {
-                        "bottle" -> {
-                            indexImageBottle++
-                            checkNumberIndex()
-
-                            Glide.with(context)
-                                .load(product.imageList[indexImageBottle])
-                                .placeholder(binding.ivProductImage.drawable)
-                                .into(binding.ivProductImage)
-                        }
-                        "car" -> {
-                            indexImageCar++
-                            checkNumberIndexCar()
-
-                            Glide.with(context)
-                                .load(product.imageList[indexImageCar])
-                                .placeholder(binding.ivProductImage.drawable)
-                                .into(binding.ivProductImage)
-                        }
-                        "shoes" -> {
-                            indexImageShoes++
-                            checkNumberIndexShoes()
-
-                            Glide.with(context)
-                                .load(product.imageList[indexImageShoes])
-                                .placeholder(binding.ivProductImage.drawable)
-                                .into(binding.ivProductImage)
-                        }
-                        else -> Timber.d("rotateLeft: Else branch")
-                    }
-                }
-            }
-            delay(40)
-        }
-    }
-
-    private fun coroutinesStartFunction(context: Context, item: View?, product: Product) {
-        GlobalScope.launch {
-            playImageLikeGif(context, item, product)
-        }
-    }
-
-    private suspend fun playImageLikeGif(context: Context, item: View?, product: Product) {
-        while (playImage) {
-            checkNumberIndex()
-            checkNumberIndexShoes()
-            checkNumberIndexCar()
-            (context as MainActivity).runOnUiThread {
-                item?.let {
-                    when (product.title) {
-                        "bottle" -> {
-                            Glide.with(context)
-                                .load(product.imageList[indexImageBottle])
-                                .placeholder(binding.ivProductImage.drawable)
-                                .into(binding.ivProductImage)
-                        }
-                        "car" -> {
-                            Glide.with(context)
-                                .load(product.imageList[indexImageCar])
-                                .placeholder(binding.ivProductImage.drawable)
-                                .into(binding.ivProductImage)
-                        }
-                        "shoes" -> {
-                            Glide.with(context)
-                                .load(product.imageList[indexImageShoes])
-                                .placeholder(binding.ivProductImage.drawable)
-                                .into(binding.ivProductImage)
-                        }
-                        else -> Timber.d("rotateLeft: Else branch")
-                    }
-//                it.ivItem.loadImage(productList[0].imageList[indexImage])
-                }
-            }
-            delay(200)
-            increaseIndex()
-            increaseIndexShoes()
-            increaseIndexCar()
-        }
-    }
-
-
-    private fun checkNumberIndex() {
-        if (indexImageBottle < 0) {
-            indexImageBottle = 35
-        } else if (indexImageBottle > 35) {
-            indexImageBottle = 0
-        }
-    }
-
-    private fun checkNumberIndexShoes() {
-        if (indexImageShoes < 0) {
-            indexImageShoes = 17
-        } else if (indexImageShoes > 17) {
-            indexImageShoes = 0
-        }
-    }
-
-    private fun checkNumberIndexCar() {
-        if (indexImageCar < 0) {
-            indexImageCar = 51
-        } else if (indexImageCar > 51) {
-            indexImageCar = 0
-        }
-    }
-
-    private fun increaseIndex() {
-        if (isReverse) {
-            indexImageBottle--
-        } else {
-            indexImageBottle++
-        }
-    }
-
-    private fun increaseIndexShoes() {
-        if (isReverse) {
-            indexImageShoes--
-        } else {
-            indexImageShoes++
-        }
-    }
-
-    private fun increaseIndexCar() {
-        if (isReverse) {
-            indexImageCar--
-        } else {
-            indexImageCar++
-        }
-    }
-
-/*    private fun setUpGestureDetector() {
-        val gestureListener = object : GestureDetector.SimpleOnGestureListener() {
-            override fun onFling(
-                e1: MotionEvent?,
-                e2: MotionEvent?,
-                velocityX: Float,
-                velocityY: Float
-            ): Boolean {
-                return true
-            }
-        }
-        val gestureDetector = GestureDetector(requireContext(), gestureListener)
     }*/
 
-    private fun inflateGlide(context: Context, item: View, product: Product) {
-        item.let {
-            Glide.with(context)
-                .load(product.imageList[indexImageBottle])
-                .placeholder(binding.ivProductImage.drawable)
-                .into(binding.ivProductImage)
-        }
-    }
+//    private suspend fun rotateRight(
+//        count: Int,
+//        context: Context,
+//        item: View?,
+//        product: Product
+//    ) {
+//        for (i in 0..count) {
+//            (context as MainActivity).runOnUiThread {
+//                item?.let {
+//                    when (product.title) {
+//                        "bottle" -> {
+//                            indexImageBottle--
+//                            checkNumberIndex()
+//
+//                            Glide.with(context)
+//                                .asBitmap()
+//                                .load(product.imageList[indexImageBottle])
+//                                .placeholder(binding.ivProductImage.drawable)
+//                                .into(binding.ivProductImage)
+//                        }
+//                        "car" -> {
+//                            indexImageCar--
+//                            checkNumberIndexCar()
+//
+//                            Glide.with(context)
+//                                .asBitmap()
+//                                .load(product.imageList[indexImageCar])
+//                                .placeholder(binding.ivProductImage.drawable)
+//                                .into(binding.ivProductImage)
+//                        }
+//                        "shoes" -> {
+//                            indexImageShoes--
+//                            checkNumberIndexShoes()
+//
+//                            Glide.with(context)
+//                                .asBitmap()
+//                                .load(product.imageList[indexImageShoes])
+//                                .placeholder(binding.ivProductImage.drawable)
+//                                .into(binding.ivProductImage)
+//                        }
+//                        else -> Timber.d("rotateRight: Else branch")
+//                    }
+//                }
+//            }
+//            delay(40)
+//        }
+//    }
+//
+//    private suspend fun rotateLeft(
+//        count: Int,
+//        context: Context,
+//        item: View?,
+//        product: Product
+//    ) {
+//        for (i in 0..count) {
+//
+//            (context as MainActivity).runOnUiThread {
+//                item?.let {
+//                    when (product.title) {
+//                        "bottle" -> {
+//                            indexImageBottle++
+//                            checkNumberIndex()
+//
+//                            Glide.with(context)
+//                                .load(product.imageList[indexImageBottle])
+//                                .placeholder(binding.ivProductImage.drawable)
+//                                .into(binding.ivProductImage)
+//                        }
+//                        "car" -> {
+//                            indexImageCar++
+//                            checkNumberIndexCar()
+//
+//                            Glide.with(context)
+//                                .load(product.imageList[indexImageCar])
+//                                .placeholder(binding.ivProductImage.drawable)
+//                                .into(binding.ivProductImage)
+//                        }
+//                        "shoes" -> {
+//                            indexImageShoes++
+//                            checkNumberIndexShoes()
+//
+//                            Glide.with(context)
+//                                .load(product.imageList[indexImageShoes])
+//                                .placeholder(binding.ivProductImage.drawable)
+//                                .into(binding.ivProductImage)
+//                        }
+//                        else -> Timber.d("rotateLeft: Else branch")
+//                    }
+//                }
+//            }
+//            delay(40)
+//        }
+//    }
+//
+//    private fun coroutinesStartFunction(context: Context, item: View?, product: Product) {
+//        GlobalScope.launch {
+//            playImageLikeGif(context, item, product)
+//        }
+//    }
+//
+//    private suspend fun playImageLikeGif(context: Context, item: View?, product: Product) {
+//        while (playImage) {
+//            checkNumberIndex()
+//            checkNumberIndexShoes()
+//            checkNumberIndexCar()
+//            (context as MainActivity).runOnUiThread {
+//                item?.let {
+//                    when (product.title) {
+//                        "bottle" -> {
+//                            Glide.with(context)
+//                                .load(product.imageList[indexImageBottle])
+//                                .placeholder(binding.ivProductImage.drawable)
+//                                .into(binding.ivProductImage)
+//                        }
+//                        "car" -> {
+//                            Glide.with(context)
+//                                .load(product.imageList[indexImageCar])
+//                                .placeholder(binding.ivProductImage.drawable)
+//                                .into(binding.ivProductImage)
+//                        }
+//                        "shoes" -> {
+//                            Glide.with(context)
+//                                .load(product.imageList[indexImageShoes])
+//                                .placeholder(binding.ivProductImage.drawable)
+//                                .into(binding.ivProductImage)
+//                        }
+//                        else -> Timber.d("rotateLeft: Else branch")
+//                    }
+////                it.ivItem.loadImage(productList[0].imageList[indexImage])
+//                }
+//            }
+//            delay(200)
+//            increaseIndex()
+//            increaseIndexShoes()
+//            increaseIndexCar()
+//        }
+//    }
+//
+//
+//    private fun checkNumberIndex() {
+//        if (indexImageBottle < 0) {
+//            indexImageBottle = 35
+//        } else if (indexImageBottle > 35) {
+//            indexImageBottle = 0
+//        }
+//    }
+//
+//    private fun checkNumberIndexShoes() {
+//        if (indexImageShoes < 0) {
+//            indexImageShoes = 17
+//        } else if (indexImageShoes > 17) {
+//            indexImageShoes = 0
+//        }
+//    }
+//
+//    private fun checkNumberIndexCar() {
+//        if (indexImageCar < 0) {
+//            indexImageCar = 51
+//        } else if (indexImageCar > 51) {
+//            indexImageCar = 0
+//        }
+//    }
+//
+//    private fun increaseIndex() {
+//        if (isReverse) {
+//            indexImageBottle--
+//        } else {
+//            indexImageBottle++
+//        }
+//    }
+//
+//    private fun increaseIndexShoes() {
+//        if (isReverse) {
+//            indexImageShoes--
+//        } else {
+//            indexImageShoes++
+//        }
+//    }
+//
+//    private fun increaseIndexCar() {
+//        if (isReverse) {
+//            indexImageCar--
+//        } else {
+//            indexImageCar++
+//        }
+//    }
+//
+///*    private fun setUpGestureDetector() {
+//        val gestureListener = object : GestureDetector.SimpleOnGestureListener() {
+//            override fun onFling(
+//                e1: MotionEvent?,
+//                e2: MotionEvent?,
+//                velocityX: Float,
+//                velocityY: Float
+//            ): Boolean {
+//                return true
+//            }
+//        }
+//        val gestureDetector = GestureDetector(requireContext(), gestureListener)
+//    }*/
+//
+//    private fun inflateGlide(context: Context, item: View, product: Product) {
+//        item.let {
+//            Glide.with(context)
+//                .load(product.imageList[indexImageBottle])
+//                .placeholder(binding.ivProductImage.drawable)
+//                .into(binding.ivProductImage)
+//        }
+//    }
 }
