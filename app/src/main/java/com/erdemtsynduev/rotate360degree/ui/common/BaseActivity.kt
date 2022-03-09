@@ -83,7 +83,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun showNoInternetDialog() {
-        if (noInternetDialog == null) {
+       /* if (noInternetDialog == null) {
             noInternetDialog = Dialog(this)
             noInternetDialog?.apply {
                 requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -95,16 +95,16 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
                 }
             }
         }
-        noInternetDialog?.show()
+        noInternetDialog?.show()*/
     }
 
     private fun dismissNoInternetDialog() {
-        if (noInternetDialog != null) {
+        /*if (noInternetDialog != null) {
             if (noInternetDialog!!.isShowing) {
                 noInternetDialog?.dismiss()
             }
             noInternetDialog = null
-        }
+        }*/
     }
 
     @RequiresApi(Build.VERSION_CODES.M)

@@ -56,8 +56,10 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.fragment:fragment:1.4.1'
     implementation 'androidx.databinding:databinding-common:7.1.0'
-    implementation project(path: ':product360View')
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
+
+    /* Implemented Product360View Library Module */
+    implementation project(path: ':product360View')
 
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

@@ -16,7 +16,10 @@ import kotlinx.coroutines.launch
 class CustomSeekbarView : FrameLayout {
     private val TAG = CustomSeekbarView::class.java.simpleName
 
-    var productImageList: ArrayList<ImageType> = arrayListOf()
+    private var productImageView: ImageView? = null
+    private var productSeekBar: SeekBar? = null
+
+    private var productImageList: ArrayList<ImageType> = arrayListOf()
 
     constructor(context: Context) : super(context) {
         initView()
@@ -40,61 +43,29 @@ class CustomSeekbarView : FrameLayout {
     private fun initView() {
         val rootView =
             LayoutInflater.from(context).inflate(R.layout.layout_product_detail, this, true)
+        productImageView = rootView.findViewById(R.id.ivProductImage)
+        productSeekBar = rootView.findViewById(R.id.sbImgRotation)
+    }
 
-//        val rootView = (context
-//            .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
-//            .inflate(R.layout.layout_product_detail, this, true)
-
-//        gravity = VERTICAL
-
-        // Load and use rest of views here
-        val imageView = rootView.findViewById<ImageView>(R.id.ivProductImage)
-        val seekBar = rootView.findViewById<SeekBar>(R.id.sbImgRotation)
-
-        Log.d(TAG, "initView: HASTALAVISTA $productImageList")
-
-//        if (productImageList.isNullOrEmpty()) {
+    private fun initProgressBarListener() {
         GlobalScope.launch {
-            seekBar.max = productImageList.size
-            seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            productSeekBar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(
                     seekBar: SeekBar?,
                     progress: Int,
                     fromUser: Boolean
                 ) {
-//                        Toast.makeText(requireContext(), "discrete seekbar progress: $progress", Toast.LENGTH_SHORT).show()
-                    Log.d(TAG, "onProgressChanged: HASTALAVISTA progress 66: $progress")
-                    if (progress > 0 && progress < productImageList.size) {
-//                        if (productImageList.isNullOrEmpty()) {
-                        imageView.loadImageType(productImageList[progress])
-//                            imageView.loadImageType(ImageType.Asset("file:///android_asset/car/4.png"))
-                        Log.d(TAG, "onProgressChanged: HASTALAVISTA productImageList is not null")
+                    if (progress < productImageList.size) {
+                        productImageView?.loadImageType(productImageList[progress])
                     }
-                    //...
-
-                    /*context?.let {
-                        Glide.with(it)
-                            .asBitmap()
-                            .load("file:///android_asset/car/4.png")
-                            .placeholder(imageView.drawable)
-                            .into(imageView)
-                    }*/
-
-//                        } else {
-//                            Log.d(TAG, "onProgressChanged: HASTALAVISTA productImageList IS NULL")
-//                        }
-//                    }
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {
-
                 }
 
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
                 }
             })
-//            }
         }
     }
 
@@ -102,39 +73,24 @@ class CustomSeekbarView : FrameLayout {
      * to get list of images here in the custom view
      **/
     fun setImageList(imageList: ArrayList<ImageType>) {
-        Log.d(TAG, " setImageList: HASTALAVISTA $imageList")
-        productImageList = imageList
-        Log.d(TAG, "setImageList: HASTALAVISTA $productImageList")
-    }
-
-    object DataProvider {
-        fun getCarImageList(): ArrayList<ImageType> {
-            return ArrayList<ImageType>().apply {
-                //Car - example
-                for (i in 52 downTo 1) {
-                    add(ImageType.Asset(imageString = "file:///android_asset/car/${i}.png"))
-                }
+        Log.d(TAG, "setImageList: $imageList")
+        if (imageList.size <= 0) {
+            throw IllegalArgumentException("Product Image list is empty.")
+        } else {
+            this.productImageList.apply {
+                clear()
+                addAll(imageList)
             }
-
-//            return ArrayList<Product>().apply {
-//                add(Product(title = "car", imageList = ArrayList<String>().apply {
-//                    /*Taking images from the assert folder*/
-//                    for (i in 52 downTo 1) {
-//                        add("file:///android_asset/car/${i}.png")
-//                    }
-//                }, description = R.string.text_car_description))
-//                add(Product(title = "bottle", imageList = ArrayList<String>().apply {
-//                    for (i in 2696..2731) {
-//                        add("file:///android_asset/bottle/AVF_${i}.jpg")
-//                    }
-//                }, description =R.string.text_bottle_description))
-//                add(Product(title = "shoes", imageList = ArrayList<String>().apply {
-//                    for (i in 1..18) {
-//                        add("file:///android_asset/shoes/image1_${i}.jpg")
-//                    }
-//                }, description = R.string.text_shoes_description))
-//            }
+            productImageView?.loadImageType(this.productImageList[0])
+            setUpProgressBar(progressBarMax = this.productImageList.size)
         }
     }
 
+    private fun setUpProgressBar(progressBarMax: Int) {
+        productSeekBar?.apply {
+            Log.d(TAG, "setUpProgressBar: $progressBarMax")
+            max = progressBarMax
+        }
+        initProgressBarListener()
+    }
 }

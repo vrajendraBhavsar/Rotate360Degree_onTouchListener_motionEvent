@@ -22,3 +22,11 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    //Project
+
+    // Project360view Library Info
+    libVersionCode = 1
+    libVersionName = '1.0.0'
+}
