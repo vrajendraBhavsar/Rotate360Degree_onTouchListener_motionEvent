@@ -27,7 +27,7 @@
             app:layout_constraintTop_toTopOf="@+id/cvCharacterInfo"
             tools:src="@drawable/ic_image_placeholder" />
 
-        <SeekBar
+        <!--<SeekBar
             android:id="@+id/sbImgRotation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,7 +39,20 @@
             android:progressBackgroundTint="@color/mirage"
             android:progressTint="@color/mirage"
             android:thumb="@drawable/thumb_style"
-            android:thumbOffset="15dp" />
+            android:thumbOffset="15dp" />-->
+
+        <com.example.product360view.common.circularSeekbar.CircularSeekBar
+            android:id="@+id/sbImgRotation"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_100"
+            app:start_angle="0"
+            app:end_angle="180"
+            android:rotationY="180"
+            app:circle_x_radius="@dimen/dp_300"
+            app:circle_y_radius="@dimen/dp_50"
+            app:maintain_equal_circle="false"
+            app:use_custom_radii="true"
+            />
 
         <!--           <View
                        android:layout_width="match_parent"

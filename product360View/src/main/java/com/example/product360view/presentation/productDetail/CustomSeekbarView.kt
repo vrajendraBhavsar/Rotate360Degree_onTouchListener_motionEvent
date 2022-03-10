@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.SeekBar
@@ -17,7 +18,7 @@ class CustomSeekbarView : FrameLayout {
     private val TAG = CustomSeekbarView::class.java.simpleName
 
     private var productImageView: ImageView? = null
-    private var productSeekBar: SeekBar? = null
+    private var productSeekBar: SeekBar? = null // ?????????
 
     private var productImageList: ArrayList<ImageType> = arrayListOf()
 
@@ -49,12 +50,13 @@ class CustomSeekbarView : FrameLayout {
 
     private fun initProgressBarListener() {
         GlobalScope.launch {
-            productSeekBar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            /*productSeekBar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(
                     seekBar: SeekBar?,
                     progress: Int,
                     fromUser: Boolean
                 ) {
+                    Log.d(TAG, "onProgressChanged: PROGRESS => $progress")
                     if (progress < productImageList.size) {
                         productImageView?.loadImageType(productImageList[progress])
                     }
@@ -65,7 +67,7 @@ class CustomSeekbarView : FrameLayout {
 
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 }
-            })
+            })*/
         }
     }
 
