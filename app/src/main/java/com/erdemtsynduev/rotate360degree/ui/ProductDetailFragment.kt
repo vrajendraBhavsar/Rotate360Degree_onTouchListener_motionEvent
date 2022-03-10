@@ -9,7 +9,7 @@ import androidx.navigation.fragment.navArgs
 import com.erdemtsynduev.rotate360degree.databinding.FragmentProductDetailBinding
 import com.erdemtsynduev.rotate360degree.model.Product
 import com.erdemtsynduev.rotate360degree.ui.common.BaseFragment
-import com.example.product360view.data.DataProvider
+import com.erdemtsynduev.rotate360degree.data.DataProvider
 
 class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
     private val TAG: String = ProductDetailFragment::class.java.simpleName

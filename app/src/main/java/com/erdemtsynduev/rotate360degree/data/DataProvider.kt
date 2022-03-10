@@ -1,4 +1,4 @@
-package com.example.product360view.data
+package com.erdemtsynduev.rotate360degree.data
 
 import com.example.product360view.domain.image.ImageType
 
