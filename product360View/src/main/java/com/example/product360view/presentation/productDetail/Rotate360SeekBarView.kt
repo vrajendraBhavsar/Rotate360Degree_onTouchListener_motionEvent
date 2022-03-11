@@ -1,6 +1,8 @@
 package com.example.product360view.presentation.productDetail
 
 import android.content.Context
+import android.content.res.TypedArray
+import android.graphics.Color
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
@@ -71,7 +73,7 @@ class Rotate360SeekBarView : FrameLayout {
             })*/
             class Rotate360SeekBarListener : Rotate360SeekBar.OnCircularSeekBarChangeListener {
                 override fun onProgressChanged(
-                    rotate360SeekBar: Rotate360SeekBar?,
+                    rotate360SeekBar: Rotate360SeekBar,
                     progress: Int,
                     fromUser: Boolean
                 ) {
@@ -81,11 +83,11 @@ class Rotate360SeekBarView : FrameLayout {
                     }
                 }
 
-                override fun onStopTrackingTouch(seekBar: Rotate360SeekBar?) {
+                override fun onStopTrackingTouch(seekBar: Rotate360SeekBar) {
 
                 }
 
-                override fun onStartTrackingTouch(seekBar: Rotate360SeekBar?) {
+                override fun onStartTrackingTouch(seekBar: Rotate360SeekBar) {
 
                 }
             }
