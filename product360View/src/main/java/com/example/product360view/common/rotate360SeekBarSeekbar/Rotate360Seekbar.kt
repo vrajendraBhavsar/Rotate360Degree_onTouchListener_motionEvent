@@ -353,58 +353,59 @@ class Rotate360SeekBar : View {
      *
      * @param attrArray TypedArray containing the attributes.
      */
+
     protected fun initAttributes(attrArray: TypedArray) {
         mCircleXRadius = attrArray.getDimension(
-            R.styleable.CircularSeekBar_circle_x_radius,
+            R.styleable.CircularSeekBar_parent_circle_x_radius,
             DEFAULT_CIRCLE_X_RADIUS * DPTOPX_SCALE
         )
         mCircleYRadius = attrArray.getDimension(
-            R.styleable.CircularSeekBar_circle_y_radius,
+            R.styleable.CircularSeekBar_parent_circle_y_radius,
             DEFAULT_CIRCLE_Y_RADIUS * DPTOPX_SCALE
         )
         mPointerRadius = attrArray.getDimension(
-            R.styleable.CircularSeekBar_pointer_radius,
+            R.styleable.CircularSeekBar_parent_pointer_radius,
             DEFAULT_POINTER_RADIUS * DPTOPX_SCALE
         )
         mPointerHaloWidth = attrArray.getDimension(
-            R.styleable.CircularSeekBar_pointer_halo_width,
+            R.styleable.CircularSeekBar_parent_pointer_halo_width,
             DEFAULT_POINTER_HALO_WIDTH * DPTOPX_SCALE
         )
         mPointerHaloBorderWidth = attrArray.getDimension(
-            R.styleable.CircularSeekBar_pointer_halo_border_width,
+            R.styleable.CircularSeekBar_parent_pointer_halo_border_width,
             DEFAULT_POINTER_HALO_BORDER_WIDTH * DPTOPX_SCALE
         )
         mCircleStrokeWidth = attrArray.getDimension(
-            R.styleable.CircularSeekBar_circle_stroke_width,
+            R.styleable.CircularSeekBar_parent_circle_stroke_width,
             DEFAULT_CIRCLE_STROKE_WIDTH * DPTOPX_SCALE
         )
         mPointerColor = attrArray.getColor(
-            R.styleable.CircularSeekBar_pointer_color,
+            R.styleable.CircularSeekBar_parent_pointer_color,
             DEFAULT_POINTER_COLOR
         )
         mPointerHaloColor = attrArray.getColor(
-            R.styleable.CircularSeekBar_pointer_halo_color,
+            R.styleable.CircularSeekBar_parent_pointer_halo_color,
             DEFAULT_POINTER_HALO_COLOR
         )
         mPointerHaloColorOnTouch = attrArray.getColor(
-            R.styleable.CircularSeekBar_pointer_halo_color_ontouch,
+            R.styleable.CircularSeekBar_parent_pointer_halo_color_ontouch,
             DEFAULT_POINTER_HALO_COLOR_ONTOUCH
         )
         mCircleColor = attrArray.getColor(
-            R.styleable.CircularSeekBar_circle_color,
+            R.styleable.CircularSeekBar_parent_circle_color,
             DEFAULT_CIRCLE_COLOR
         )
         mCircleProgressColor = attrArray.getColor(
-            R.styleable.CircularSeekBar_circle_progress_color,
+            R.styleable.CircularSeekBar_parent_circle_progress_color,
             DEFAULT_CIRCLE_PROGRESS_COLOR
         )
         mCircleFillColor = attrArray.getColor(
-            R.styleable.CircularSeekBar_circle_fill,
+            R.styleable.CircularSeekBar_parent_circle_fill,
             DEFAULT_CIRCLE_FILL_COLOR
         )
         mPointerAlpha = Color.alpha(mPointerHaloColor)
         mPointerAlphaOnTouch = attrArray.getInt(
-            R.styleable.CircularSeekBar_pointer_alpha_ontouch,
+            R.styleable.CircularSeekBar_parent_pointer_alpha_ontouch,
             DEFAULT_POINTER_ALPHA_ONTOUCH
         )
         if (mPointerAlphaOnTouch > 255 || mPointerAlphaOnTouch < 0) {
@@ -412,37 +413,37 @@ class Rotate360SeekBar : View {
                 DEFAULT_POINTER_ALPHA_ONTOUCH
         }
         mMax = attrArray.getInt(
-            R.styleable.CircularSeekBar_max,
+            R.styleable.CircularSeekBar_parent_max,
             DEFAULT_MAX
         )
         mProgress = attrArray.getInt(
-            R.styleable.CircularSeekBar_progress,
+            R.styleable.CircularSeekBar_parent_progress,
             DEFAULT_PROGRESS
         )
         mCustomRadii = attrArray.getBoolean(
-            R.styleable.CircularSeekBar_use_custom_radii,
+            R.styleable.CircularSeekBar_parent_use_custom_radii,
             DEFAULT_USE_CUSTOM_RADII
         )
         mMaintainEqualCircle = attrArray.getBoolean(
-            R.styleable.CircularSeekBar_maintain_equal_circle,
+            R.styleable.CircularSeekBar_parent_maintain_equal_circle,
             DEFAULT_MAINTAIN_EQUAL_CIRCLE
         )
         mMoveOutsideCircle = attrArray.getBoolean(
-            R.styleable.CircularSeekBar_move_outside_circle,
+            R.styleable.CircularSeekBar_parent_move_outside_circle,
             DEFAULT_MOVE_OUTSIDE_CIRCLE
         )
         isLockEnabled = attrArray.getBoolean(
-            R.styleable.CircularSeekBar_lock_enabled,
+            R.styleable.CircularSeekBar_parent_lock_enabled,
             DEFAULT_LOCK_ENABLED
         )
 
         // Modulo 360 right now to avoid constant conversion
         mStartAngle = (360f + attrArray.getFloat(
-            R.styleable.CircularSeekBar_start_angle,
+            R.styleable.CircularSeekBar_parent_start_angle,
             DEFAULT_START_ANGLE
         ) % 360f) % 360f
         mEndAngle = (360f + attrArray.getFloat(
-            R.styleable.CircularSeekBar_end_angle,
+            R.styleable.CircularSeekBar_parent_end_angle,
             DEFAULT_END_ANGLE
         ) % 360f) % 360f
         if (mStartAngle == mEndAngle) {
@@ -450,6 +451,8 @@ class Rotate360SeekBar : View {
             mEndAngle = mEndAngle - .1f
         }
     }
+
+
 
     /**
      * Initializes the `Paint` objects with the appropriate styles.
@@ -864,7 +867,7 @@ class Rotate360SeekBar : View {
     protected fun init(attrs: AttributeSet?, defStyle: Int) {
         val attrArray =
             context.obtainStyledAttributes(attrs, R.styleable.CircularSeekBar, defStyle, 0)
-        initAttributes(attrArray)
+        initAttributes(attrArray) // ???????????????????????????????? - We don't need
         attrArray.recycle()
         initPaints()
     }
@@ -943,6 +946,98 @@ class Rotate360SeekBar : View {
             mCircleProgressPaint!!.color = mCircleProgressColor
             invalidate()
         }
+
+    var startAngle: Float
+        get() = mStartAngle
+        set(startAngle) {
+            mStartAngle = startAngle
+            invalidate()
+        }
+
+    var endAngle: Float
+        get() = mEndAngle
+        set(endAngle) {
+            mEndAngle = endAngle
+            invalidate()
+        }
+
+    var moveOutsideCircle: Boolean
+        get() = mMoveOutsideCircle
+        set(moveOutsideCircle) {
+            mMoveOutsideCircle = moveOutsideCircle
+            invalidate()
+        }
+
+    var maintainEqualCircle: Boolean
+        get() = mMaintainEqualCircle
+        set(maintainEqualCircle) {
+            mMaintainEqualCircle = maintainEqualCircle
+            invalidate()
+        }
+
+/*    var userIsMovingPointer: Boolean
+        get() = mUserIsMovingPointer
+        set(userIsMovingPointer) {
+            mUserIsMovingPointer = userIsMovingPointer
+            invalidate()
+        }*/
+
+    var customRadii: Boolean
+        get() = mCustomRadii
+        set(customRadii) {
+            mCustomRadii = customRadii
+            invalidate()
+        }
+
+ /*   var _isLockEnabled: Boolean
+        get() = isLockEnabled
+        set(_isLockEnabled) {
+            isLockEnabled = _isLockEnabled
+            invalidate()
+        }*/
+
+    var circleXRadius: Float
+        get() = mCircleXRadius
+        set(circleXRadius) {
+            mCircleXRadius = circleXRadius
+            invalidate()
+        }
+
+    var circleYRadius: Float
+        get() = mCircleYRadius
+        set(circleYRadius) {
+            mCircleYRadius = circleYRadius
+            invalidate()
+        }
+
+    var circleStrokeWidth: Float
+        get() = mCircleStrokeWidth
+        set(circleStrokeWidth) {
+            mCircleStrokeWidth = circleStrokeWidth
+            invalidate()
+        }
+
+    var pointerRadius: Float
+        get() = mPointerRadius
+        set(pointerRadius) {
+            mPointerRadius = pointerRadius
+            invalidate()
+        }
+
+    var pointerHaloWidth: Float
+        get() = mPointerHaloWidth
+        set(pointerHaloWidth) {
+            mPointerHaloWidth = pointerHaloWidth
+            invalidate()
+        }
+
+    var pointerHaloBorderWidth: Float
+        get() = mPointerHaloBorderWidth
+        set(pointerHaloBorderWidth) {
+            mPointerHaloBorderWidth = pointerHaloBorderWidth
+            invalidate()
+        }
+
     /**
      * Gets the pointer color.
      *
