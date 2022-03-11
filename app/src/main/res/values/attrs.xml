@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+Pointer -> Inner thumb circle
+Pointer halo -> outer thumb circle
+Circle -> Arc/track
+-->
 <resources>
     <declare-styleable name="CircularSeekBar">
         <attr name="progress" format="integer"/> <!--To set the progress-->

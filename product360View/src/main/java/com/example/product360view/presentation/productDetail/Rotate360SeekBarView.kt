@@ -7,18 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.SeekBar
 import com.example.product360view.R
 import com.example.product360view.common.extenstions.loadImageType
+import com.example.product360view.common.rotate360SeekBarSeekbar.Rotate360SeekBar
 import com.example.product360view.domain.image.ImageType
+import kotlinx.android.synthetic.main.layout_product_detail.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class CustomSeekbarView : FrameLayout {
-    private val TAG = CustomSeekbarView::class.java.simpleName
+class Rotate360SeekBarView : FrameLayout {
+    private val TAG = Rotate360SeekBarView::class.java.simpleName
 
     private var productImageView: ImageView? = null
-    private var productSeekBar: SeekBar? = null // ?????????
+    private var productSeekBar: View? = null // ?????????
 
     private var productImageList: ArrayList<ImageType> = arrayListOf()
 
@@ -68,6 +69,27 @@ class CustomSeekbarView : FrameLayout {
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 }
             })*/
+            class Rotate360SeekBarListener : Rotate360SeekBar.OnCircularSeekBarChangeListener {
+                override fun onProgressChanged(
+                    rotate360SeekBar: Rotate360SeekBar?,
+                    progress: Int,
+                    fromUser: Boolean
+                ) {
+                    Log.d(TAG, "onProgressChanged: PROGRESS => $progress")
+                    if (progress < productImageList.size) {
+                        productImageView?.loadImageType(productImageList[progress])
+                    }
+                }
+
+                override fun onStopTrackingTouch(seekBar: Rotate360SeekBar?) {
+
+                }
+
+                override fun onStartTrackingTouch(seekBar: Rotate360SeekBar?) {
+
+                }
+            }
+            sbImgRotation.setOnSeekBarChangeListener(Rotate360SeekBarListener())
         }
     }
 
@@ -91,7 +113,7 @@ class CustomSeekbarView : FrameLayout {
     private fun setUpProgressBar(progressBarMax: Int) {
         productSeekBar?.apply {
             Log.d(TAG, "setUpProgressBar: $progressBarMax")
-            max = progressBarMax
+            sbImgRotation.max = progressBarMax
         }
         initProgressBarListener()
     }

@@ -35,10 +35,10 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.example.product360view.presentation.productDetail.CustomSeekbarView
+            <com.example.product360view.presentation.productDetail.Rotate360SeekBarView
                 android:id="@+id/customSeekBar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <View
                 android:layout_width="match_parent"
