@@ -3,6 +3,7 @@ package com.example.product360view.common.rotate360SeekBarSeekbar
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.*
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.AttributeSet
@@ -10,9 +11,13 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
 import com.example.product360view.R
+import com.example.product360view.common.utils.SizeUtils
 import kotlin.math.atan2
 
 class Rotate360SeekBar : View {
+    private val POINTER_MAX_WIDTH = 30f
+    private var mHidePointer = false
+
     /**
      * Used to scale the dp units to pixels
      */
@@ -335,6 +340,12 @@ class Rotate360SeekBar : View {
         init(null, 0)
     }
 
+
+    /**
+     * To set Thumb/pointer drawable
+     */
+    private var mPointerDrawable: Drawable? = null
+
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         init(attrs, 0)
     }
@@ -450,6 +461,8 @@ class Rotate360SeekBar : View {
             //mStartAngle = mStartAngle + 1f;
             mEndAngle = mEndAngle - .1f
         }
+        mPointerDrawable = attrArray.getDrawable(R.styleable.CircularSeekBar_parent_pointer_drawable)
+
     }
 
 
@@ -584,6 +597,7 @@ class Rotate360SeekBar : View {
                 mPointerHaloBorderPaint!!
             )
         }
+//        drawPointer(canvas)
     }
     /**
      * Get the progress of the CircularSeekBar.
@@ -870,6 +884,19 @@ class Rotate360SeekBar : View {
         initAttributes(attrArray) // ???????????????????????????????? - We don't need
         attrArray.recycle()
         initPaints()
+
+        if (mPointerDrawable == null) {
+            mPointerRadius = pointerRadius / 2.0f
+//            mThumbTouchRadius = mThumbRadius * 1.2f
+        } else {
+            mPointerRadius = Math.min(
+                SizeUtils.dp2px(
+                    context,
+                    POINTER_MAX_WIDTH
+                ).toFloat(), pointerRadius
+            ) / 2.0f
+            mPointerRadius = pointerRadius
+        }
     }
 
     override fun onSaveInstanceState(): Parcelable? {
@@ -1171,6 +1198,58 @@ class Rotate360SeekBar : View {
 
         fun onStopTrackingTouch(seekBar: Rotate360SeekBar)
         fun onStartTrackingTouch(seekBar: Rotate360SeekBar)
+    }
+
+//    private fun drawPointer(canvas: Canvas) {
+//        if (mHidePointer) {
+//            return
+//        }
+//        val thumbCenterX: Float = getThumbCenterX()
+//        if (mPointerDrawable != null) { //check user has set thumb drawable or not.ThumbDrawable first, thumb color for later.
+//            if (mPointerBitmap == null || mPressedPointerBitmap == null) {
+//                initPointerBitmap()
+//            }
+//            require(!(mPointerBitmap == null || mPressedPointerBitmap == null)) {
+//                //please check your selector drawable's format and correct.
+//                "the format of the selector thumb drawable is wrong!"
+//            }
+//            mStockPaint.setAlpha(255)
+//            if (mUserIsMovingPointer) {
+//                canvas.drawBitmap(
+//                    mPressedPointerBitmap,
+//                    thumbCenterX - mPressedPointerBitmap.getWidth() / 2.0f,
+//                    mProgressTrack.top - mPressedPointerBitmap.getHeight() / 2.0f,
+//                    mStockPaint
+//                )
+//            } else {
+//                canvas.drawBitmap(
+//                    mPointerBitmap,
+//                    thumbCenterX - mPointerBitmap.getWidth() / 2.0f,
+//                    mProgressTrack.top - mPointerBitmap.getHeight() / 2.0f,
+//                    mStockPaint
+//                )
+//            }
+//        } else {
+//            if (mUserIsMovingPointer) {
+//                mStockPaint.setColor(mPressedPointerColor)
+//            } else {
+//                mStockPaint.setColor(mPointerColor)
+//            }
+//            canvas.drawCircle(
+//                thumbCenterX,
+//                mProgressTrack.top,
+//                if (mUserIsMovingPointer) mPointerTouchRadius else mPointerRadius,
+//                mStockPaint
+//            )
+//        }
+//    }
+
+    /**
+     * call this will do not draw thumb, true if hide.
+     */
+    fun hidePointer(hide: Boolean) {
+        mHidePointer = hide
+        invalidate()
     }
 
     companion object {

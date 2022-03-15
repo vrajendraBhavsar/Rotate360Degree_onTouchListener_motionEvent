@@ -28,12 +28,14 @@ Circle -> Arc/track
         <attr name="parent_pointer_halo_color_ontouch" format="color"/> <!--On touch, changes the color of the area between inner thumb and the border-->
         <attr name="parent_pointer_alpha_ontouch" format="integer"/> <!--user touches the CircularSeekBar, the opacity/alpha of the pointer halo changes to this value. Defaults to 100 (out of 255)-->
         <attr name="parent_circle_fill" format="color"/> <!--fill up area above arc-->
+        <!--test for custom thumb/pointer-->
+        <attr name="parent_pointer_drawable" format="reference" /><!--set custom thumb's drawable you want,thumb size will be limited in 30dp, if drawable less than 30dp ,will show in intrinsic size -->
     </declare-styleable>
 
     <!-- Child seekbar used in the custom view with Imageview -->
     <declare-styleable name="Rotate360SeekBarView">
 <!--        <attr name="rotate_seekbar_view_circle_fill" format="color"/> &lt;!&ndash;Track color&ndash;&gt;-->
-        <attr name="progress" format="integer"/> <!--To set the progress-->
+<!--        <attr name="progress" format="integer"/> &lt;!&ndash;To set the progress&ndash;&gt;-->
         <attr name="max" format="integer"/> <!--To set the limit of the progress/Track-->
         <attr name="start_angle" format="float"/> <!--starting of the thumb-->
         <attr name="end_angle" format="float"/> <!--ending of the thumb-->

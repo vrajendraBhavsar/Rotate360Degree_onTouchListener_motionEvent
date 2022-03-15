@@ -35,6 +35,25 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <com.ssarcseekbar.app.GaugeSeekBar
+                android:id="@+id/sbImgRotation"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_150"
+                app:startAngleDegrees="90"
+                android:rotationX="180"
+                app:trackWidth="5dp"
+                android:padding="@dimen/dp_5"
+                app:progressWidth="@dimen/dp_5"
+                app:thumbRadius="20dp"
+                app:interactive="true"
+                app:thumbColor="@color/neon_orange"
+                app:thumbDrawable="@drawable/thumb_style"
+                app:max="30"
+                app:progress_primary_color="@color/mirage"
+                app:progress_secondary_color="@color/neon_orange"
+                app:start_offset="90"
+                />
+
             <com.example.product360view.presentation.productDetail.Rotate360SeekBarView
                 android:id="@+id/customSeekBar"
                 android:layout_width="match_parent"

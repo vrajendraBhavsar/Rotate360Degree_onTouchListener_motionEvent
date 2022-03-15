@@ -301,10 +301,10 @@ class Rotate360SeekBarView : FrameLayout {
             R.styleable.Rotate360SeekBarView_max,
             DEFAULT_MAX
         )
-        mProgress = attrArray.getInt(
-            R.styleable.Rotate360SeekBarView_progress,
-            DEFAULT_PROGRESS
-        )
+//        mProgress = attrArray.getInt(
+//            R.styleable.Rotate360SeekBarView_progress,
+//            DEFAULT_PROGRESS
+//        )
         mCustomRadii = attrArray.getBoolean(
             R.styleable.Rotate360SeekBarView_use_custom_radii,
             DEFAULT_USE_CUSTOM_RADII
