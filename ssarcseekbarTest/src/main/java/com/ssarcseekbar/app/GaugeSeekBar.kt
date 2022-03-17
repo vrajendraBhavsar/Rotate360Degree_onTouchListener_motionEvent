@@ -5,13 +5,14 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Canvas
 import android.graphics.PointF
-import androidx.annotation.DimenRes
-import androidx.annotation.FloatRange
-import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.widget.FrameLayout
+import androidx.annotation.DimenRes
+import androidx.annotation.FloatRange
+import androidx.core.content.ContextCompat
 
 class GaugeSeekBar : View {
 
@@ -26,15 +27,21 @@ class GaugeSeekBar : View {
         applyAttributes(context.theme.obtainStyledAttributes(attrs, R.styleable.GaugeSeekBar, 0, 0))
     }
 
-    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle) {
+    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(
+        context,
+        attrs,
+        defStyle
+    ) {
         applyAttributes(context.theme.obtainStyledAttributes(attrs, R.styleable.GaugeSeekBar, 0, 0))
     }
 
     private var thumbRadius = DEFAULT_THUMB_RADIUS_DP * resources.displayMetrics.density
     private var trackWidth = DEFAULT_TRACK_WIDTH_DP * resources.displayMetrics.density
     private var progressWidth = DEFAULT_TRACK_WIDTH_DP * resources.displayMetrics.density
-    private var trackGradientArray: IntArray = context.resources.getIntArray(R.array.default_track_gradient)
-    private var progressGradientArray = context.resources.getIntArray(R.array.default_index_gradient)
+    private var trackGradientArray: IntArray =
+        context.resources.getIntArray(R.array.default_track_gradient)
+    private var progressGradientArray =
+        context.resources.getIntArray(R.array.default_index_gradient)
     private var progressGradientArrayPositions: FloatArray? = null
     private var thumbColor: Int = ContextCompat.getColor(context, R.color.default_thumb_color)
     private var startAngle = DEFAULT_START_ANGLE_DEG
@@ -58,13 +65,13 @@ class GaugeSeekBar : View {
         setLayerType(LAYER_TYPE_SOFTWARE, null)
     }
 
-    fun setThumbColor(thumbColor : Int){
+    fun setThumbColor(thumbColor: Int) {
         this.thumbColor = thumbColor
 
         invalidate()
     }
 
-    fun setProgressGradientArray(progressGradientArray : IntArray){
+    fun setProgressGradientArray(progressGradientArray: IntArray) {
         this.progressGradientArray = progressGradientArray
 
         invalidate()
@@ -171,94 +178,132 @@ class GaugeSeekBar : View {
             startAngle = attributes.getFloat(R.styleable.GaugeSeekBar_startAngleDegrees, startAngle)
             thumbRadius = attributes.getDimension(R.styleable.GaugeSeekBar_thumbRadius, thumbRadius)
             thumbColor = attributes.getColor(R.styleable.GaugeSeekBar_thumbColor, thumbColor)
-            val trackGradientArrayId = attributes.getResourceId(R.styleable.GaugeSeekBar_trackGradient, 0)
+            val trackGradientArrayId =
+                attributes.getResourceId(R.styleable.GaugeSeekBar_trackGradient, 0)
             if (trackGradientArrayId != 0) {
                 trackGradientArray = resources.getIntArray(trackGradientArrayId)
             }
 
-            val trackGradientArrayPositionsResourceId = attributes.getResourceId(R.styleable.GaugeSeekBar_trackGradientPositions, 0)
+            val trackGradientArrayPositionsResourceId =
+                attributes.getResourceId(R.styleable.GaugeSeekBar_trackGradientPositions, 0)
             if (trackGradientArrayPositionsResourceId != 0) {
                 val positionsIntArray = resources.getIntArray(trackGradientArrayPositionsResourceId)
-                progressGradientArrayPositions = FloatArray(positionsIntArray.size) { positionsIntArray[it].div(100f) }
+                progressGradientArrayPositions =
+                    FloatArray(positionsIntArray.size) { positionsIntArray[it].div(100f) }
             }
 
             showThumb = attributes.getBoolean(R.styleable.GaugeSeekBar_showThumb, showThumb)
-            isThumbOutside = attributes.getBoolean(R.styleable.GaugeSeekBar_isThumbOutside, isThumbOutside)
-            progressWidth = attributes.getDimension(R.styleable.GaugeSeekBar_progressWidth, progressWidth)
+            isThumbOutside =
+                attributes.getBoolean(R.styleable.GaugeSeekBar_isThumbOutside, isThumbOutside)
+            progressWidth =
+                attributes.getDimension(R.styleable.GaugeSeekBar_progressWidth, progressWidth)
             trackWidth = attributes.getDimension(R.styleable.GaugeSeekBar_trackWidth, trackWidth)
             progress = attributes.getFloat(R.styleable.GaugeSeekBar_progress, 0f)
 
-            val gradientArrayResourceId = attributes.getResourceId(R.styleable.GaugeSeekBar_progressGradient, 0)
+            val gradientArrayResourceId =
+                attributes.getResourceId(R.styleable.GaugeSeekBar_progressGradient, 0)
             if (gradientArrayResourceId != 0) {
                 progressGradientArray = resources.getIntArray(gradientArrayResourceId)
             }
-            val gradientArrayPositionsResourceId = attributes.getResourceId(R.styleable.GaugeSeekBar_progressGradientPositions, 0)
+            val gradientArrayPositionsResourceId =
+                attributes.getResourceId(R.styleable.GaugeSeekBar_progressGradientPositions, 0)
             if (gradientArrayPositionsResourceId != 0) {
                 val positionsIntArray = resources.getIntArray(gradientArrayPositionsResourceId)
-                progressGradientArrayPositions = FloatArray(positionsIntArray.size) { positionsIntArray[it].div(100f) }
+                progressGradientArrayPositions =
+                    FloatArray(positionsIntArray.size) { positionsIntArray[it].div(100f) }
             }
 
             interactive = attributes.getBoolean(R.styleable.GaugeSeekBar_interactive, interactive)
             thumbDrawableId = attributes.getResourceId(R.styleable.GaugeSeekBar_thumbDrawable, 0)
-            showProgress = attributes.getBoolean(R.styleable.GaugeSeekBar_showProgress, showProgress)
+            showProgress =
+                attributes.getBoolean(R.styleable.GaugeSeekBar_showProgress, showProgress)
         } finally {
             attributes.recycle()
         }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+//        super.onMeasure(widthMeasureSpec, heightMeasureSpec / 2)
 
-        init(measuredWidth / 2f, 2*measuredHeight / 3f)
+        val height = FrameLayout.getDefaultSize(suggestedMinimumHeight, heightMeasureSpec)
+        val width = FrameLayout.getDefaultSize(suggestedMinimumWidth, widthMeasureSpec)
+
+        setMeasuredDimension(width, height)
+        init(width / 2f, height / 2f)
+
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean =
-            if (interactive) {
-                when (event.action) {
-                    MotionEvent.ACTION_DOWN -> {
-                        performClick()
-                        handleMotionEvent(event)
-                    }
-                    MotionEvent.ACTION_MOVE -> {
-                        handleMotionEvent(event)
-                    }
+        if (interactive) {
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    performClick()
+                    handleMotionEvent(event)
                 }
-                true
-            } else {
-                super.onTouchEvent(event)
+                MotionEvent.ACTION_MOVE -> {
+                    handleMotionEvent(event)
+                }
             }
+            true
+        } else {
+            super.onTouchEvent(event)
+        }
 
     private fun handleMotionEvent(event: MotionEvent) {
         val relativeX = measuredWidth / 2f - event.x
-//        val relativeY = event.y - measuredHeight / 3f
         val relativeY = event.y - measuredHeight / 2f
         val angle = Math.toDegrees(Math.atan2(relativeX.toDouble(), relativeY.toDouble()))
         setProgress(angleToProgress(if (angle > 0) angle else angle + 360f))
         progressChangedCallback.invoke(progress)
     }
 
-    private fun angleToProgress(angle: Double): Float { //Affects the process speed against the finger swipe
-//        val availableAngle = 360 - 2 * startAngle
+    private fun angleToProgress(angle: Double): Float {
         val availableAngle = 360 - 2 * startAngle
         val relativeAngle = angle - startAngle
         return (relativeAngle / availableAngle).toFloat()
     }
 
-    private fun init(centerX: Float, centerY: Float) {
-        val centerPosition = PointF(centerX , centerY)
-        val radiusPx = Math.min(centerX, centerY)
-        val margin = Math.max(thumbRadius, trackWidth)
-        trackDrawable = TrackDrawable(centerPosition, radiusPx, margin, trackGradientArray, startAngle, trackWidth)
+    private fun init(centerX: Float, centerY: Float) { //510, 225
+        val centerPosition = PointF(centerX, centerY) //PointF(510, 225)
+        val radiusPx = Math.min(centerX, centerY) // 225
+        val margin = Math.max(thumbRadius, trackWidth / 2f) //60
+        trackDrawable = TrackDrawable(
+            centerPosition,
+            radiusPx,
+            margin,
+            trackGradientArray,
+            startAngle,
+            trackWidth
+        )
 
         if (showProgress) {
             Log.e("Margin", margin.toString())
-            progressDrawable = ProgressDrawable(centerPosition, progress, radiusPx, margin, progressGradientArray, startAngle, progressWidth, progressGradientArrayPositions)
+            progressDrawable = ProgressDrawable(
+                centerPosition,
+                progress,
+                radiusPx,
+                margin,
+                progressGradientArray,
+                startAngle,
+                progressWidth,
+                progressGradientArrayPositions
+            )
         }
 
         if (showThumb) {
-            val thumbDrawable = if (thumbDrawableId != 0) ContextCompat.getDrawable(context, thumbDrawableId)!! else ThumbDrawable(thumbColor)
-            thumbEntity = ThumbEntity(centerPosition, progress, startAngle, thumbRadius, thumbDrawable, context)
+            val thumbDrawable = if (thumbDrawableId != 0) ContextCompat.getDrawable(    // Drawable thumb
+                context,
+                thumbDrawableId
+            )!! else ThumbDrawable(thumbColor)  // Colourful thumb
+            thumbEntity = ThumbEntity(
+                centerPosition,
+                progress,
+                startAngle,
+                thumbRadius,
+                thumbDrawable,
+                context
+            )
         }
     }
 

@@ -14,12 +14,12 @@ class ProgressDrawable(position: PointF,
     private var isThumbOutside: Boolean = false
 
     private val gradientPositionsArray: FloatArray =
-            if (gradientPositionsArray != null) {
-                getGradientPositions(gradientPositionsArray)
-            } else getGradientPositions(
-                    FloatArray(gradientArray.size) {
-                        it.toFloat() / (gradientArray.size - 1)
-                    })
+        if (gradientPositionsArray != null) {
+            getGradientPositions(gradientPositionsArray)
+        } else getGradientPositions(
+            FloatArray(gradientArray.size) {
+                it.toFloat() / (gradientArray.size - 1)
+            })
 
     init {
         if (gradientArray.size != this.gradientPositionsArray.size)
@@ -68,23 +68,23 @@ class ProgressDrawable(position: PointF,
     override fun draw(canvas: Canvas) {
         val angle = ((360 - (startAngle * 2)) * progress)
         if (angle > 0) {
-            var rect = RectF((centerPosition.x - radiusPx + margin),
-                (centerPosition.y - radiusPx + margin)*3,
-                    centerPosition.x + radiusPx - margin,
-                    centerPosition.y + radiusPx - margin)
+            var rect = RectF(centerPosition.x - radiusPx + margin,
+                centerPosition.y - radiusPx + margin,
+                centerPosition.x + radiusPx - margin,
+                centerPosition.y + radiusPx - margin)
 
             if(isThumbOutside){
                 rect = RectF(centerPosition.x - radiusPx + margin + 60,
-                        centerPosition.y - radiusPx + margin + 60,
-                        centerPosition.x + radiusPx - margin - 60,
-                        centerPosition.y + radiusPx - margin - 60)
+                    centerPosition.y - radiusPx + margin + 60,
+                    centerPosition.x + radiusPx - margin - 60,
+                    centerPosition.y + radiusPx - margin - 60)
             }
 
             canvas.drawArc(rect,
-                    90f + startAngle,
-                    angle,
-                    false,
-                    progressPaint)
+                90f + startAngle,
+                angle,
+                false,
+                progressPaint)
         }
     }
 

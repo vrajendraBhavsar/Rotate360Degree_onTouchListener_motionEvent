@@ -7,16 +7,22 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
 import com.example.product360view.R
 import com.example.product360view.common.utils.SizeUtils
+import com.example.product360view.common.utils.ThumbEntity
+import com.example.product360view.common.utils.TrackDrawable
+import com.ssarcseekbar.app.ThumbDrawable
 import kotlin.math.atan2
 
 class Rotate360SeekBar : View {
     private val POINTER_MAX_WIDTH = 30f
     private var mHidePointer = false
+    private var thumbEntity: ThumbEntity? = null
 
     /**
      * Used to scale the dp units to pixels
@@ -344,7 +350,7 @@ class Rotate360SeekBar : View {
     /**
      * To set Thumb/pointer drawable
      */
-    private var mPointerDrawable: Drawable? = null
+    private var mPointerDrawable: Int = 0
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         init(attrs, 0)
@@ -461,8 +467,8 @@ class Rotate360SeekBar : View {
             //mStartAngle = mStartAngle + 1f;
             mEndAngle = mEndAngle - .1f
         }
-        mPointerDrawable = attrArray.getDrawable(R.styleable.CircularSeekBar_parent_pointer_drawable)
 
+        mPointerDrawable = attrArray.getResourceId(R.styleable.CircularSeekBar_parent_pointer_drawable, 0)
     }
 
 
@@ -571,7 +577,7 @@ class Rotate360SeekBar : View {
      * Initialize the `RectF` objects with the appropriate values.
      */
     protected fun initRects() {
-        mCircleRectF[-mCircleWidth, -mCircleHeight, mCircleWidth] = mCircleHeight
+        mCircleRectF[-mCircleWidth, -mCircleHeight , mCircleWidth] = mCircleHeight // Divide mCircleHeight with "x" number to tweak with the height of the track/progress/thumb moving angle
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -581,23 +587,26 @@ class Rotate360SeekBar : View {
         canvas.drawPath(mCircleProgressPath!!, mCircleProgressGlowPaint!!)
         canvas.drawPath(mCircleProgressPath!!, mCircleProgressPaint!!)
         canvas.drawPath(mCirclePath!!, mCircleFillPaint!!)
-        canvas.drawCircle(
-            mPointerPositionXY[0], mPointerPositionXY[1], mPointerRadius + mPointerHaloWidth,
-            mPointerHaloPaint!!
-        )
-        canvas.drawCircle(
-            mPointerPositionXY[0], mPointerPositionXY[1], mPointerRadius,
-            mPointerPaint!!
-        )
-        if (mUserIsMovingPointer) {
-            canvas.drawCircle(
-                mPointerPositionXY[0],
-                mPointerPositionXY[1],
-                mPointerRadius + mPointerHaloWidth + mPointerHaloBorderWidth / 3f,
-                mPointerHaloBorderPaint!!
-            )
-        }
+//        canvas.drawCircle(  //It draw the outer layer of the thumb
+//            mPointerPositionXY[0], mPointerPositionXY[1], mPointerRadius + mPointerHaloWidth,
+//            mPointerHaloPaint!!
+//        )
+//        canvas.drawCircle(  //To set Thumb position (Inner circle)
+//            mPointerPositionXY[0], mPointerPositionXY[1], mPointerRadius,
+//            mPointerPaint!!
+//        )
+//        Log.d("VRAJTEST", "onDraw: mPointerPositionXY=> ${mPointerPositionXY[0]}, ${mPointerPositionXY[1]}, radius => $mPointerRadius")
+//        if (mUserIsMovingPointer) { //outer circle of thumb
+//            canvas.drawCircle(
+//                mPointerPositionXY[0],
+//                mPointerPositionXY[1],
+//                mPointerRadius + mPointerHaloWidth + mPointerHaloBorderWidth / 3f,
+//                mPointerHaloBorderPaint!!
+//            )
+//        }
 //        drawPointer(canvas)
+        thumbEntity?.draw(canvas, mProgress.toFloat(), thumbOutside = false)
+
     }
     /**
      * Get the progress of the CircularSeekBar.
@@ -641,6 +650,9 @@ class Rotate360SeekBar : View {
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val height = FrameLayout.getDefaultSize(suggestedMinimumHeight, heightMeasureSpec)
         val width = FrameLayout.getDefaultSize(suggestedMinimumWidth, widthMeasureSpec)
+
+        initDrawable(width, height)
+
         if (mMaintainEqualCircle) {
             val min = Math.min(width, height)
             setMeasuredDimension(min, min)
@@ -672,6 +684,25 @@ class Rotate360SeekBar : View {
             mCircleWidth = min
         }
         recalculateAll()
+    }
+
+    private fun initDrawable(width: Int, height: Int) {
+        val centerPosition = PointF(width.toFloat(), height.toFloat()) //PointF(510, 225)
+
+        val thumbDrawable = if (pointerDrawable != null)
+            ContextCompat.getDrawable(    // Drawable thumb
+                context,
+                pointerDrawable
+            )!! else ThumbDrawable(mPointerColor)  // Colourful thumb
+
+        thumbEntity = ThumbEntity(
+            centerPosition,
+            progress.toFloat(),
+            startAngle,
+            mPointerRadius,
+            thumbDrawable,
+            context
+        )
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -914,6 +945,7 @@ class Rotate360SeekBar : View {
         state.putInt("mPointerAlphaOnTouch", mPointerAlphaOnTouch)
         state.putBoolean("lockEnabled", isLockEnabled)
         state.putBoolean("isTouchEnabled", isTouchEnabled)
+        state.putInt("mPointerDrawable", mPointerDrawable)
         return state
     }
 
@@ -932,6 +964,7 @@ class Rotate360SeekBar : View {
         mPointerAlphaOnTouch = savedState.getInt("mPointerAlphaOnTouch")
         isLockEnabled = savedState.getBoolean("lockEnabled")
         isTouchEnabled = savedState.getBoolean("isTouchEnabled")
+        mPointerDrawable = savedState.getInt("mPointerDrawable")
         initPaints()
         recalculateAll()
     }
@@ -1135,6 +1168,15 @@ class Rotate360SeekBar : View {
                 mPointerAlphaOnTouch = alpha
             }
         }
+
+    var pointerDrawable: Int
+        get() = mPointerDrawable
+        set(alpha) {
+            if (alpha != null) {
+                mPointerDrawable = alpha
+            }
+        }
+
     /**
      * Gets the circle fill color.
      *

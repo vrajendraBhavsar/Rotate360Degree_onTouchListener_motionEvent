@@ -1,4 +1,4 @@
-package com.ssarcseekbar.app
+package com.example.product360view.common.utils
 
 import android.graphics.Canvas
 import android.graphics.ColorFilter

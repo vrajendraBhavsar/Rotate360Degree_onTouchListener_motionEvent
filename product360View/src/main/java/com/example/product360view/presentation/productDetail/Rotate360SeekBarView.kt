@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import com.example.product360view.R
 import com.example.product360view.common.extenstions.loadImageType
 import com.example.product360view.common.rotate360SeekBarSeekbar.Rotate360SeekBar
@@ -99,6 +100,11 @@ class Rotate360SeekBarView : FrameLayout {
      * The width of the pointer halo border (in pixels).
      */
     protected var mPointerHaloBorderWidth = 0f
+
+    /**
+     * Drawable of a thumb (in Int).
+     */
+    protected var mPointerDrawable = 0
 
     /**
      * Start angle of the CircularSeekBar.
@@ -258,6 +264,10 @@ class Rotate360SeekBarView : FrameLayout {
         mPointerHaloBorderWidth = attrArray.getDimension(
             R.styleable.Rotate360SeekBarView_pointer_halo_border_width,
             DEFAULT_POINTER_HALO_BORDER_WIDTH * DPTOPX_SCALE
+        )
+        mPointerDrawable = attrArray.getResourceId(
+            R.styleable.Rotate360SeekBarView_pointer_drawable,
+            ContextCompat.getColor(context, com.ssarcseekbar.app.R.color.default_thumb_color)
         )
         mCircleStrokeWidth = attrArray.getDimension(
             R.styleable.Rotate360SeekBarView_circle_stroke_width,
@@ -474,6 +484,7 @@ class Rotate360SeekBarView : FrameLayout {
         mSeekbar.pointerRadius = mPointerRadius
         mSeekbar.pointerHaloWidth = mPointerHaloWidth
         mSeekbar.pointerHaloBorderWidth = mPointerHaloBorderWidth
+        mSeekbar.pointerDrawable = mPointerDrawable
     }
 
     companion object {
