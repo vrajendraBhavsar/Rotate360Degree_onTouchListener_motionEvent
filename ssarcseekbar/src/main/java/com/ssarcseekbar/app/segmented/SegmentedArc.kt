@@ -161,10 +161,8 @@ class SegmentedArc : View {
         }
         height = when (heightMode) {
             MeasureSpec.EXACTLY -> {
-//                heightSize
-                min(minHeight, heightSize)
+                heightSize
             }
-//            MeasureSpec.AT_MOST -> {
             MeasureSpec.AT_MOST -> {
                 min(minHeight, heightSize)
             }

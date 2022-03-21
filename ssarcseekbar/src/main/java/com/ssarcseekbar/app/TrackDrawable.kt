@@ -63,15 +63,15 @@ class TrackDrawable(position: PointF,
     }
 
     override fun draw(canvas: Canvas) {
-        val angle = ((360 - (startAngle * 2)))
-        var rect = RectF((centerPosition.x - radiusPx + margin),
-            (centerPosition.y - radiusPx + margin)*3,
-            (centerPosition.x + radiusPx - margin),
+        val angle = (360 - (startAngle * 2))
+        var rect = RectF(centerPosition.x - radiusPx + margin,
+                centerPosition.y - radiusPx + margin,
+                centerPosition.x + radiusPx - margin,
                 centerPosition.y + radiusPx - margin)
 
         if (isThumbOutside) {
-            rect = RectF((centerPosition.x - radiusPx + margin + 60),
-                (centerPosition.y - radiusPx + margin + 60)*3,
+            rect = RectF(centerPosition.x - radiusPx + margin + 60,
+                    centerPosition.y - radiusPx + margin + 60,
                     centerPosition.x + radiusPx - margin - 60,
                     centerPosition.y + radiusPx - margin - 60)
         }

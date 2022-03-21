@@ -209,7 +209,7 @@ class GaugeSeekBar : View {
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
-        init(measuredWidth / 2f, 2*measuredHeight / 3f)
+        init(measuredWidth / 2f, measuredHeight / 2f)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -231,15 +231,13 @@ class GaugeSeekBar : View {
 
     private fun handleMotionEvent(event: MotionEvent) {
         val relativeX = measuredWidth / 2f - event.x
-//        val relativeY = event.y - measuredHeight / 3f
         val relativeY = event.y - measuredHeight / 2f
         val angle = Math.toDegrees(Math.atan2(relativeX.toDouble(), relativeY.toDouble()))
         setProgress(angleToProgress(if (angle > 0) angle else angle + 360f))
         progressChangedCallback.invoke(progress)
     }
 
-    private fun angleToProgress(angle: Double): Float { //Affects the process speed against the finger swipe
-//        val availableAngle = 360 - 2 * startAngle
+    private fun angleToProgress(angle: Double): Float {
         val availableAngle = 360 - 2 * startAngle
         val relativeAngle = angle - startAngle
         return (relativeAngle / availableAngle).toFloat()
@@ -248,7 +246,7 @@ class GaugeSeekBar : View {
     private fun init(centerX: Float, centerY: Float) {
         val centerPosition = PointF(centerX , centerY)
         val radiusPx = Math.min(centerX, centerY)
-        val margin = Math.max(thumbRadius, trackWidth)
+        val margin = Math.max(thumbRadius, trackWidth / 2f)
         trackDrawable = TrackDrawable(centerPosition, radiusPx, margin, trackGradientArray, startAngle, trackWidth)
 
         if (showProgress) {

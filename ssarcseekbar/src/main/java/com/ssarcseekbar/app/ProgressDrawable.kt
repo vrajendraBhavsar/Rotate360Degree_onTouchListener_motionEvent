@@ -68,8 +68,8 @@ class ProgressDrawable(position: PointF,
     override fun draw(canvas: Canvas) {
         val angle = ((360 - (startAngle * 2)) * progress)
         if (angle > 0) {
-            var rect = RectF((centerPosition.x - radiusPx + margin),
-                (centerPosition.y - radiusPx + margin)*3,
+            var rect = RectF(centerPosition.x - radiusPx + margin,
+                    centerPosition.y - radiusPx + margin,
                     centerPosition.x + radiusPx - margin,
                     centerPosition.y + radiusPx - margin)
 

@@ -60,7 +60,7 @@ dependencies {
 
     /* Implemented Product360View Library Module */
     implementation project(path: ':product360View')
-    implementation project(path: ':ssarcseekbarTest')
+    implementation project(path: ':ssarcseekbar')
 
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

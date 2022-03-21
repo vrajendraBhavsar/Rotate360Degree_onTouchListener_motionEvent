@@ -9,10 +9,6 @@
     <array name="default_index_gradient">
         <item>@color/green</item>
         <item>@color/red</item>
-        <item>#673AB7</item>
-        <item>#FF9800</item>
-        <item>#21FFE5</item>
-        <item>#D033FB</item>
     </array>
 
     <array name="default_track_gradient">
