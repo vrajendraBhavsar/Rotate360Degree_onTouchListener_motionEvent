@@ -11,7 +11,6 @@ import com.erdemtsynduev.rotate360degree.databinding.FragmentProductDetailBindin
 import com.erdemtsynduev.rotate360degree.model.Product
 import com.erdemtsynduev.rotate360degree.ui.common.BaseFragment
 
-
 class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
     private val TAG: String = ProductDetailFragment::class.java.simpleName
 
