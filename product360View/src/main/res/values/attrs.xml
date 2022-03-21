@@ -1,61 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-Pointer -> Inner thumb circle
-Pointer halo -> outer thumb circle
-Circle -> Arc/track
--->
-<!-- Parent seekbar -->
 <resources>
-    <declare-styleable name="CircularSeekBar">
-        <attr name="parent_progress" format="integer"/> <!--To set the progress-->
-        <attr name="parent_max" format="integer"/> <!--To set the limit of the progress/Track-->
-        <attr name="parent_start_angle" format="float"/> <!--starting of the thumb-->
-        <attr name="parent_end_angle" format="float"/> <!--ending of the thumb-->
-        <attr name="parent_move_outside_circle" format="boolean"/>
-        <attr name="parent_maintain_equal_circle" format="boolean"/> <!--to maintain circular ark shape => True-->
-        <attr name="parent_use_custom_radii" format="boolean"/> <!--decreases the curve of tha arc-->
-        <attr name="parent_lock_enabled" format="boolean"/> <!--???-->
-        <attr name="parent_circle_x_radius" format="dimension" /> <!--Width of the arc-->
-        <attr name="parent_circle_y_radius" format="dimension" /> <!--Height of the arc-->
-        <attr name="parent_circle_stroke_width" format="dimension" /> <!--Width of the Track-->
-        <attr name="parent_pointer_radius" format="dimension" /> <!--Inner thumb radius-->
-        <attr name="parent_pointer_halo_width" format="dimension" /> <!--Outer thumb color-->
-        <attr name="parent_pointer_halo_border_width" format="dimension"/> <!--On touch, Change the border size of Thumb + decreases horizontal width of the track-->
-        <attr name="parent_circle_color" format="color"/> <!--Track color-->
-        <attr name="parent_circle_progress_color" format="color"/> <!--Progress color-->
-        <attr name="parent_pointer_color" format="color"/> <!--Color for center of the thumb-->
-        <attr name="parent_pointer_halo_color" format="color"/> <!--outer part of the thumb-->
-        <attr name="parent_pointer_halo_color_ontouch" format="color"/> <!--On touch, changes the color of the area between inner thumb and the border-->
-        <attr name="parent_pointer_alpha_ontouch" format="integer"/> <!--user touches the CircularSeekBar, the opacity/alpha of the pointer halo changes to this value. Defaults to 100 (out of 255)-->
-        <attr name="parent_circle_fill" format="color"/> <!--fill up area above arc-->
-    </declare-styleable>
-
-    <!-- Child seekbar used in the custom view with Imageview -->
-    <declare-styleable name="Rotate360SeekBarView">
-<!--        <attr name="rotate_seekbar_view_circle_fill" format="color"/> &lt;!&ndash;Track color&ndash;&gt;-->
-        <attr name="progress" format="integer"/> <!--To set the progress-->
-        <attr name="max" format="integer"/> <!--To set the limit of the progress/Track-->
-        <attr name="start_angle" format="float"/> <!--starting of the thumb-->
-        <attr name="end_angle" format="float"/> <!--ending of the thumb-->
-        <attr name="move_outside_circle" format="boolean"/>
-        <attr name="maintain_equal_circle" format="boolean"/> <!--to maintain circular ark shape => True-->
-        <attr name="use_custom_radii" format="boolean"/> <!--decreases the curve of tha arc-->
-        <attr name="lock_enabled" format="boolean"/> <!--???-->
-        <attr name="circle_x_radius" format="dimension" /> <!--Width of the arc-->
-        <attr name="circle_y_radius" format="dimension" /> <!--Height of the arc-->
-        <attr name="circle_stroke_width" format="dimension" /> <!--Width of the Track-->
-        <attr name="pointer_radius" format="dimension" /> <!--Inner thumb radius-->
-        <attr name="pointer_halo_width" format="dimension" /> <!--Outer thumb color-->
-        <attr name="pointer_halo_border_width" format="dimension"/> <!--On touch, Change the border size of Thumb + decreases horizontal width of the track-->
-        <attr name="circle_color" format="color"/> <!--Track color-->
-        <attr name="circle_progress_color" format="color"/> <!--Progress color-->
-        <attr name="pointer_color" format="color"/> <!--Color for center of the thumb-->
-        <attr name="pointer_halo_color" format="color"/> <!--outer part of the thumb-->
-        <attr name="pointer_halo_color_ontouch" format="color"/> <!--On touch, changes the color of the area between inner thumb and the border-->
-        <attr name="pointer_alpha_ontouch" format="integer"/> <!--user touches the CircularSeekBar, the opacity/alpha of the pointer halo changes to this value. Defaults to 100 (out of 255)-->
-        <attr name="circle_fill" format="color"/> <!--fill up area above arc-->
-    </declare-styleable>
-
     <declare-styleable name="ArcSeekBar">
         <attr name="thumb" format="reference" />
         <attr name="progress_" format="integer" />
@@ -67,5 +11,4 @@ Circle -> Arc/track
         <attr name="roundEdges" format="boolean" />
         <attr name="enabled" format="boolean" />
     </declare-styleable>
-
 </resources>

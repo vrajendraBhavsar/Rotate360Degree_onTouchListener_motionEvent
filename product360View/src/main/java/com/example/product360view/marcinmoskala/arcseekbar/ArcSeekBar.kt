@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.example.product360view.R
 
 class ArcSeekBar @JvmOverloads constructor(
@@ -81,12 +82,12 @@ class ArcSeekBar @JvmOverloads constructor(
         }
 
     private var progressBackgroundPaint: Paint = makeProgressPaint(
-            color = a.useOrDefault(resources.getColor(android.R.color.darker_gray)) { getColor(R.styleable.ArcSeekBar_progressBackgroundColor, it) },
+            color = a.useOrDefault(ContextCompat.getColor(context, android.R.color.darker_gray)) { getColor(R.styleable.ArcSeekBar_progressBackgroundColor, it) },
             width = progressBackgroundWidth
     )
 
     private var progressPaint: Paint = makeProgressPaint(
-            color = a.useOrDefault(resources.getColor(android.R.color.holo_blue_light)) { getColor(R.styleable.ArcSeekBar_progressColor, it) },
+            color = a.useOrDefault(ContextCompat.getColor(context, android.R.color.holo_blue_light)) { getColor(R.styleable.ArcSeekBar_progressColor, it) },
             width = progressWidth
     )
 
