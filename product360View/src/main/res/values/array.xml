@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--marcinmoskala seekbar gradient color-->
+    <integer-array name="progressGradientColors">
+        <!--        <item>#b5fff6</item>
+                <item>#00ffdf</item>
+                <item>#00bfa4</item>
+                <item>#007c6a</item>-->
+        <item>@color/mirage</item>
+        <item>@color/blue_2072d8</item>
+        <item>@color/neon_orange</item>
+        <item>@color/red</item>
+    </integer-array>
+</resources>

@@ -52,6 +52,7 @@
                 app:progress_primary_color="@color/mirage"
                 app:progress_secondary_color="@color/neon_orange"
                 app:start_offset="90"
+                app:progressGradient="@array/progressGradientColors"
                 />
 
             <com.example.product360view.presentation.productDetail.Rotate360SeekBarView
