@@ -423,6 +423,18 @@ class Rotate360SeekBarView : FrameLayout {
                 }
             }
             sbImgRotation.setOnSeekBarChangeListener(Rotate360SeekBarListener())
+//            sbImgRotation.onProgressChangedListener(mProgress)
+
+/*            val progressListener = ProgressListener { progress ->
+                Log.i("SeekBar", "Value is $progress")
+                Toast.makeText(context, "Marcin progress => $progress", Toast.LENGTH_SHORT).show()
+            }
+            progressListener.invoke(0)*/
+//            sbImgRotation.onProgressChangedListener()
+            /*sbImgRotation?.let {
+                it.onProgressChangedListener(progressListener)
+            }*/
+
         }
     }
 

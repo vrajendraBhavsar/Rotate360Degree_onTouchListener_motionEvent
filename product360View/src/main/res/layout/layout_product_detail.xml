@@ -41,6 +41,17 @@
             android:thumb="@drawable/thumb_style"
             android:thumbOffset="15dp" />-->
 
+     <!--   <com.example.product360view.marcinmoskala.arcseekbar.ArcSeekBar
+            android:id="@+id/sbImgRotation"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_80"
+            app:progressBackgroundColor="@color/mirage_less_opacity"
+            app:progressBackgroundWidth="2dp"
+            app:progressWidth="2dp"
+            android:rotationX="180"
+            app:thumb="@drawable/thumb_style"
+            />-->
+
         <com.example.product360view.common.rotate360SeekBarSeekbar.Rotate360SeekBar
             android:id="@+id/sbImgRotation"
             android:layout_width="match_parent"

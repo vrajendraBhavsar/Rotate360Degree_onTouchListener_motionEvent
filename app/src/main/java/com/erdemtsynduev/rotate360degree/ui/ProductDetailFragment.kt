@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.erdemtsynduev.rotate360degree.R
+import com.erdemtsynduev.rotate360degree.data.DataProvider
 import com.erdemtsynduev.rotate360degree.databinding.FragmentProductDetailBinding
 import com.erdemtsynduev.rotate360degree.model.Product
 import com.erdemtsynduev.rotate360degree.ui.common.BaseFragment
-import com.erdemtsynduev.rotate360degree.data.DataProvider
+
 
 class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
     private val TAG: String = ProductDetailFragment::class.java.simpleName
@@ -38,6 +40,12 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
         binding.tbProductDetails.ibBack.setOnClickListener(::navigateToProductFragment)
         setToolbarTitle("Product Detail")
         bindData()
+
+        val intArray = resources.getIntArray(R.array.progressGradientColors)
+        binding.customSeekBarMarcin.setProgressGradient(intArray)
+
+//        binding.customSeekBarMarcin.setProgressGradient(R.color.background_dark, R.color.holo_blue_dark, R.color.system_accent1_100)
+
 //        setUpGestureDetector()
 //        init360Image(product = productDetailFragmentArgs.product)
     }

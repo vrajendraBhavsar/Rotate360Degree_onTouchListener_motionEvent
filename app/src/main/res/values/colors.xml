@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 <!--    <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>-->
@@ -44,5 +44,17 @@
     <!--Toggle-->
     <color name="button_toggle">#FF000000</color>
     <color name="button_toggle_text">@color/white</color>
+
+    <!--marcinmoskala seekbar gradient color-->
+    <integer-array name="progressGradientColors">
+        <!--<item>#b5fff6</item>
+        <item>#00ffdf</item>
+        <item>#00bfa4</item>
+        <item>#007c6a</item>-->
+        <item>@color/mirage</item>
+        <item>@color/blue_2072d8</item>
+        <item>@color/neon_orange</item>
+        <item>@color/red</item>
+    </integer-array>
 
 </resources>
