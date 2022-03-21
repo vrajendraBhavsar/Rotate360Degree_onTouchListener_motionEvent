@@ -19,7 +19,7 @@ class ArcSeekBar @JvmOverloads constructor(
         defStyleRes: Int = 0
 ) : View(context, attrs, defStyle) {
 
-    var onProgressChangedListener: (ProgressListener)? = null
+    var onProgressChangedListener: ProgressListener? = null
     var onStartTrackingTouch: (ProgressListener)? = null
     var onStopTrackingTouch: (ProgressListener)? = null
 

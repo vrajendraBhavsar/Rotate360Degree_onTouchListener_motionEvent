@@ -41,7 +41,7 @@
             android:thumb="@drawable/thumb_style"
             android:thumbOffset="15dp" />-->
 
-     <!--   <com.example.product360view.marcinmoskala.arcseekbar.ArcSeekBar
+        <com.example.product360view.marcinmoskala.arcseekbar.ArcSeekBar
             android:id="@+id/sbImgRotation"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_80"
@@ -50,9 +50,9 @@
             app:progressWidth="2dp"
             android:rotationX="180"
             app:thumb="@drawable/thumb_style"
-            />-->
+            />
 
-        <com.example.product360view.common.rotate360SeekBarSeekbar.Rotate360SeekBar
+        <!--<com.example.product360view.common.rotate360SeekBarSeekbar.Rotate360SeekBar
             android:id="@+id/sbImgRotation"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_120"
@@ -71,7 +71,7 @@
             app:pointer_halo_color="@color/mirage_less_opacity"
             app:pointer_halo_width="@dimen/dp_0"
             app:start_angle="0"
-            app:use_custom_radii="false" />
+            app:use_custom_radii="false" />-->
 
         <!--           <View
                        android:layout_width="match_parent"

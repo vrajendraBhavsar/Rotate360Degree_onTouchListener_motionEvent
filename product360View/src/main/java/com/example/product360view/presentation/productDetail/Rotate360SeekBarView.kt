@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.Toast
 import com.example.product360view.R
 import com.example.product360view.common.extenstions.loadImageType
 import com.example.product360view.common.rotate360SeekBarSeekbar.Rotate360SeekBar
@@ -19,6 +20,7 @@ import com.example.product360view.domain.image.ImageType
 import kotlinx.android.synthetic.main.layout_product_detail.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import com.example.product360view.marcinmoskala.arcseekbar.ProgressListener as ProgressListener
 
 class Rotate360SeekBarView : FrameLayout {
     //...............
@@ -375,11 +377,11 @@ class Rotate360SeekBarView : FrameLayout {
 
         val attrArray =
             context.obtainStyledAttributes(attrs, R.styleable.Rotate360SeekBarView, defStyleAttr, 0)
-        initAttributes(attrArray)
+//        initAttributes(attrArray)
         attrArray.recycle()
 
-        val mSeekbar = rootView.findViewById<Rotate360SeekBar>(R.id.sbImgRotation)
-        initParentAttribute(mSeekbar)
+//        val mSeekbar = rootView.findViewById<Rotate360SeekBar>(R.id.sbImgRotation)
+//        initParentAttribute(mSeekbar)
     }
 
     private fun initProgressBarListener() {
@@ -402,7 +404,10 @@ class Rotate360SeekBarView : FrameLayout {
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 }
             })*/
-            class Rotate360SeekBarListener : Rotate360SeekBar.OnCircularSeekBarChangeListener {
+
+            //Mar 21
+
+/*            class Rotate360SeekBarListener : Rotate360SeekBar.OnCircularSeekBarChangeListener {
                 override fun onProgressChanged(
                     rotate360SeekBar: Rotate360SeekBar,
                     progress: Int,
@@ -422,14 +427,24 @@ class Rotate360SeekBarView : FrameLayout {
 
                 }
             }
-            sbImgRotation.setOnSeekBarChangeListener(Rotate360SeekBarListener())
+            sbImgRotation.setOnSeekBarChangeListener(Rotate360SeekBarListener())*/
+
+
+
 //            sbImgRotation.onProgressChangedListener(mProgress)
 
-/*            val progressListener = ProgressListener { progress ->
-                Log.i("SeekBar", "Value is $progress")
-                Toast.makeText(context, "Marcin progress => $progress", Toast.LENGTH_SHORT).show()
+            sbImgRotation.onProgressChangedListener = object : ProgressListener {
+                override fun invoke(progress: Int) {
+                    Log.d(TAG, "invoke: $progress")
+                    if (progress < productImageList.size) {
+                        productImageView?.loadImageType(productImageList[progress])
+                    }
+                }
             }
-            progressListener.invoke(0)*/
+
+            val intArray = resources.getIntArray(R.array.progressGradientColors)
+            sbImgRotation.setProgressGradient(intArray)
+
 //            sbImgRotation.onProgressChangedListener()
             /*sbImgRotation?.let {
                 it.onProgressChangedListener(progressListener)
@@ -458,11 +473,14 @@ class Rotate360SeekBarView : FrameLayout {
     private fun setUpProgressBar(progressBarMax: Int) {
         productSeekBar?.apply {
             Log.d(TAG, "setUpProgressBar: $progressBarMax")
-            sbImgRotation.max = progressBarMax
+            sbImgRotation.maxProgress = progressBarMax
         }
         initProgressBarListener()
     }
 
+    /**
+     * Te send attribute value to Rotate360SeekBar
+     **/
     private fun initParentAttribute(mSeekbar: Rotate360SeekBar) {
         mSeekbar.circleColor = mCircleColor
         mSeekbar.circleProgressColor = mCircleProgressColor

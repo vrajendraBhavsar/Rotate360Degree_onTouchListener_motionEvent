@@ -45,4 +45,16 @@
     <color name="button_toggle">#FF000000</color>
     <color name="button_toggle_text">@color/white</color>
 
+    <!--marcinmoskala seekbar gradient color-->
+    <integer-array name="progressGradientColors">
+        <!--<item>#b5fff6</item>
+        <item>#00ffdf</item>
+        <item>#00bfa4</item>
+        <item>#007c6a</item>-->
+        <item>@color/mirage</item>
+        <item>@color/blue_2072d8</item>
+        <item>@color/neon_orange</item>
+        <item>@color/red</item>
+    </integer-array>
+
 </resources>
