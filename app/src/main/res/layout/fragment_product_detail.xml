@@ -38,7 +38,14 @@
             <com.example.product360view.presentation.productDetail.Rotate360SeekBarView
                 android:id="@+id/customSeekBar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:progressBackgroundColor="@color/mirage_less_opacity"
+                app:progressBackgroundWidth="2dp"
+                app:progressWidth="10dp"
+                app:thumb="@drawable/thumb_style"
+                app:progressGradient="@array/trackGradientColors"
+                app:progress="@integer/gradient_angle_45"
+                />
 
             <View
                 android:layout_width="match_parent"

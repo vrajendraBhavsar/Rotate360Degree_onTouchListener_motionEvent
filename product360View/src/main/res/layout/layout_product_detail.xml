@@ -31,12 +31,7 @@
             android:id="@+id/sbImgRotation"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_80"
-            app:progressBackgroundColor="@color/mirage_less_opacity"
-            app:progressBackgroundWidth="2dp"
-            app:progressWidth="2dp"
             android:rotationX="180"
-            app:thumb="@drawable/thumb_style"
-            app:progressGradient="@array/trackGradientColors"
             />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

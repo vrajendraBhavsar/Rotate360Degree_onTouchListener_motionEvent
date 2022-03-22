@@ -14,26 +14,38 @@ import androidx.core.content.ContextCompat
 import com.example.product360view.R
 
 class ArcSeekBar @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyle: Int = 0,
-        defStyleRes: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0,
+    defStyleRes: Int = 0
 ) : View(context, attrs, defStyle) {
 
     var onProgressChangedListener: ProgressListener? = null
     var onStartTrackingTouch: (ProgressListener)? = null
     var onStopTrackingTouch: (ProgressListener)? = null
 
-    private val a = attrs?.let { context.obtainStyledAttributes(attrs, R.styleable.ArcSeekBar, defStyle, defStyleRes) }
+    private var trackGradientArray: IntArray = context.resources.getIntArray(R.array.trackGradientColors)
+    private var progressGradientArray: IntArray = context.resources.getIntArray(R.array.progressGradientColors)
+    private var progressGradientId: Int = 0
 
-    var maxProgress = a.useOrDefault(100) { getInteger(R.styleable.ArcSeekBar_maxProgress, it) }
+    private val a = attrs?.let {
+        context.obtainStyledAttributes(
+            attrs,
+            R.styleable.ArcSeekBar,
+            defStyle,
+            defStyleRes
+        )
+    }
+
+    var maxProgress =
+        a.useOrDefault(100) { getInteger(R.styleable.ArcSeekBar_parent_maxProgress, it) }
         set(progress) {
             field = bound(0, progress, Int.MAX_VALUE)
             drawData?.let { drawData = it.copy(maxProgress = progress) }
             invalidate()
         }
 
-    var progress: Int = a.useOrDefault(0) { getInteger(R.styleable.ArcSeekBar_progress_, it) }
+    var progress: Int = a.useOrDefault(0) { getInteger(R.styleable.ArcSeekBar_parent_progress, it) }
         set(progress) {
             field = bound(0, progress, maxProgress)
             onProgressChangedListener?.invoke(progress)
@@ -41,13 +53,23 @@ class ArcSeekBar @JvmOverloads constructor(
             invalidate()
         }
 
-    var progressWidth: Float = a.useOrDefault(4 * context.resources.displayMetrics.density) { getDimension(R.styleable.ArcSeekBar_progressWidth, it) }
+    var progressWidth: Float = a.useOrDefault(4 * context.resources.displayMetrics.density) {
+        getDimension(
+            R.styleable.ArcSeekBar_parent_progressWidth,
+            it
+        )
+    }
         set(value) {
             field = value
             progressPaint.strokeWidth = value
         }
 
-    var progressBackgroundWidth: Float = a.useOrDefault(2F) { getDimension(R.styleable.ArcSeekBar_progressBackgroundWidth, it) }
+    var progressBackgroundWidth: Float = a.useOrDefault(2F) {
+        getDimension(
+            R.styleable.ArcSeekBar_parent_progressBackgroundWidth,
+            it
+        )
+    }
         set(mArcWidth) {
             field = mArcWidth
             progressBackgroundPaint.strokeWidth = mArcWidth
@@ -67,9 +89,13 @@ class ArcSeekBar @JvmOverloads constructor(
             invalidate()
         }
 
-    private val thumb: Drawable = a?.getDrawable(R.styleable.ArcSeekBar_thumb) ?: resources.getDrawable(R.drawable.thumb)
+    var thumb: Drawable = a?.getDrawable(R.styleable.ArcSeekBar_parent_thumb) ?: resources.getDrawable(R.drawable.thumb)
+        set(value) {
+            field = value
+        }
 
-    private var roundedEdges = a.useOrDefault(true) { getBoolean(R.styleable.ArcSeekBar_roundEdges, it) }
+    var roundedEdges =
+        a.useOrDefault(true) { getBoolean(R.styleable.ArcSeekBar_parent_roundEdges, it) }
         set(value) {
             if (value) {
                 progressBackgroundPaint.strokeCap = Paint.Cap.ROUND
@@ -82,16 +108,26 @@ class ArcSeekBar @JvmOverloads constructor(
         }
 
     private var progressBackgroundPaint: Paint = makeProgressPaint(
-            color = a.useOrDefault(ContextCompat.getColor(context, android.R.color.darker_gray)) { getColor(R.styleable.ArcSeekBar_progressBackgroundColor, it) },
-            width = progressBackgroundWidth
+        color = a.useOrDefault(
+            ContextCompat.getColor(
+                context,
+                android.R.color.darker_gray
+            )
+        ) { getColor(R.styleable.ArcSeekBar_parent_progressBackgroundColor, it) },
+        width = progressBackgroundWidth
     )
 
     private var progressPaint: Paint = makeProgressPaint(
-            color = a.useOrDefault(ContextCompat.getColor(context, android.R.color.holo_blue_light)) { getColor(R.styleable.ArcSeekBar_progressColor, it) },
-            width = progressWidth
+        color = a.useOrDefault(
+            ContextCompat.getColor(
+                context,
+                android.R.color.holo_blue_light
+            )
+        ) { getColor(R.styleable.ArcSeekBar_parent_progressColor, it) },
+        width = progressWidth
     )
 
-    private var mEnabled = a?.getBoolean(R.styleable.ArcSeekBar_enabled, true) ?: true
+    private var mEnabled = a?.getBoolean(R.styleable.ArcSeekBar_parent_enabled, true) ?: true
 
     init {
         a?.recycle()
@@ -122,7 +158,12 @@ class ArcSeekBar @JvmOverloads constructor(
     private fun ArcSeekBarData.drawThumb(canvas: Canvas) {
         val thumbHalfHeight = thumb.intrinsicHeight / 2
         val thumbHalfWidth = thumb.intrinsicWidth / 2
-        thumb.setBounds(thumbX - thumbHalfWidth, thumbY - thumbHalfHeight, thumbX + thumbHalfWidth, thumbY + thumbHalfHeight)
+        thumb.setBounds(
+            thumbX - thumbHalfWidth,
+            thumbY - thumbHalfHeight,
+            thumbX + thumbHalfWidth,
+            thumbY + thumbHalfHeight
+        )
         thumb.draw(canvas)
     }
 
@@ -133,8 +174,16 @@ class ArcSeekBar @JvmOverloads constructor(
         val dx = maxOf(thumb.intrinsicWidth.toFloat() / 2, this.progressWidth) + 2
         val dy = maxOf(thumb.intrinsicHeight.toFloat() / 2, this.progressWidth) + 2
         val realWidth = width.toFloat() - 2 * dx - paddingLeft - paddingRight
-        val realHeight = minOf(height.toFloat() - 2 * dy - paddingTop - paddingBottom, realWidth / 2)
-        drawData = ArcSeekBarData(dx + paddingLeft, dy + paddingTop, realWidth, realHeight, progress, maxProgress)
+        val realHeight =
+            minOf(height.toFloat() - 2 * dy - paddingTop - paddingBottom, realWidth / 2)
+        drawData = ArcSeekBarData(
+            dx + paddingLeft,
+            dy + paddingTop,
+            realWidth,
+            realHeight,
+            progress,
+            maxProgress
+        )
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 
@@ -168,13 +217,14 @@ class ArcSeekBar @JvmOverloads constructor(
         setGradient(progressBackgroundPaint, colors)
     }
 
-    fun setProgressGradient(colors: IntArray ) {
+    fun setProgressGradient(colors: IntArray) {
         setGradient(progressPaint, colors)
     }
 
     private fun setGradient(paint: Paint, colors: IntArray) {
         doWhenDrawerDataAreReady {
-            paint.shader = LinearGradient(it.dx, 0F, it.width, 0F, colors, null, Shader.TileMode.CLAMP)
+            paint.shader =
+                LinearGradient(it.dx, 0F, it.width, 0F, colors, null, Shader.TileMode.CLAMP)
         }
         invalidate()
     }
@@ -188,7 +238,8 @@ class ArcSeekBar @JvmOverloads constructor(
     }
 
     private fun updateOnTouch(event: MotionEvent) {
-        val progressFromClick = drawData?.progressFromClick(event.x, event.y, thumb.intrinsicHeight) ?: return
+        val progressFromClick =
+            drawData?.progressFromClick(event.x, event.y, thumb.intrinsicHeight) ?: return
         isPressed = true
         progress = progressFromClick
     }
@@ -199,5 +250,6 @@ class ArcSeekBar @JvmOverloads constructor(
         this.mEnabled = enabled
     }
 
-    fun <T, R> T?.useOrDefault(default: R, usage: T.(R) -> R) = if (this == null) default else usage(default)
+    fun <T, R> T?.useOrDefault(default: R, usage: T.(R) -> R) =
+        if (this == null) default else usage(default)
 }
