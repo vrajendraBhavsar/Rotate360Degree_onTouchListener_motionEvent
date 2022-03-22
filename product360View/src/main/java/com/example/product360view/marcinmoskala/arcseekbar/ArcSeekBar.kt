@@ -24,9 +24,6 @@ class ArcSeekBar @JvmOverloads constructor(
     var onStartTrackingTouch: (ProgressListener)? = null
     var onStopTrackingTouch: (ProgressListener)? = null
 
-    private var trackGradientArray: IntArray = context.resources.getIntArray(R.array.trackGradientColors)
-    private var progressGradientArray: IntArray = context.resources.getIntArray(R.array.progressGradientColors)
-    private var progressGradientId: Int = 0
 
     private val a = attrs?.let {
         context.obtainStyledAttributes(
@@ -89,10 +86,8 @@ class ArcSeekBar @JvmOverloads constructor(
             invalidate()
         }
 
-    var thumb: Drawable = a?.getDrawable(R.styleable.ArcSeekBar_parent_thumb) ?: resources.getDrawable(R.drawable.thumb)
-        set(value) {
-            field = value
-        }
+    var thumb: Drawable = a?.getDrawable(R.styleable.ArcSeekBar_parent_thumb)
+        ?: resources.getDrawable(R.drawable.thumb)
 
     var roundedEdges =
         a.useOrDefault(true) { getBoolean(R.styleable.ArcSeekBar_parent_roundEdges, it) }

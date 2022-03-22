@@ -11,13 +11,6 @@
         android:id="@+id/tbProductDetails"
         layout="@layout/custom_toolbar" />
 
-    <!--    <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/glMiddle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.35" />-->
-
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cvCharacterInfo"
         android:layout_width="match_parent"
@@ -41,11 +34,9 @@
                 android:layout_height="wrap_content"
                 app:progressBackgroundColor="@color/mirage_less_opacity"
                 app:progressBackgroundWidth="2dp"
+                app:progressGradient="@array/testProgressColors"
                 app:progressWidth="10dp"
-                app:thumb="@drawable/thumb_style"
-                app:progressGradient="@array/trackGradientColors"
-                app:progress="@integer/gradient_angle_45"
-                />
+                app:thumb="@drawable/thumb_style" />
 
             <View
                 android:layout_width="match_parent"
@@ -64,18 +55,6 @@
                 android:gravity="start"
                 android:textColor="@color/text_description"
                 tools:text="koenigsegg" />
-
-            <!--            <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvCharacterSpecies"
-                            style="@style/TextRobotoBold22"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp_8"
-                            android:layout_marginBottom="@dimen/dp_16"
-                            android:gravity="center"
-                            android:text=""
-                            android:textColor="@color/text_description"
-                            tools:text="Human" />-->
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvProductDescription"
