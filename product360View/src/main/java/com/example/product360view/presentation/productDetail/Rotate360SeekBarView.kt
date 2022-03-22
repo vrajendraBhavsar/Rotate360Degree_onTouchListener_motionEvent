@@ -1,6 +1,7 @@
 package com.example.product360view.presentation.productDetail
 
 import android.content.Context
+import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,6 +22,10 @@ class Rotate360SeekBarView : FrameLayout {
     private var productImageView: ImageView? = null
     private var productSeekBar: View? = null // ?????????
     private var productImageList: ArrayList<ImageType> = arrayListOf()
+
+    private var trackGradientArray: IntArray = context.resources.getIntArray(R.array.trackGradientColors)
+    private var progressGradientArray: IntArray = context.resources.getIntArray(R.array.progressGradientColors)
+    private var progressGradientId: Int = 0
 
     constructor(context: Context) : super(context) {
         initView(null, 0)
@@ -48,9 +53,28 @@ class Rotate360SeekBarView : FrameLayout {
         productImageView = rootView.findViewById(R.id.ivProductImage)
         productSeekBar = rootView.findViewById(R.id.sbImgRotation)
 
-        val attrArray =
-            context.obtainStyledAttributes(attrs, R.styleable.Rotate360SeekBarView, defStyleAttr, 0)
-        attrArray.recycle()
+        val attrArray = context.obtainStyledAttributes(attrs, R.styleable.ArcSeekBar, 0, 0)
+//        resources.obtainTypedArray(R.styleable.ArcSeekBar)
+        applyAttribute(attrArray)
+    }
+
+    private fun applyAttribute(attrArray: TypedArray) {
+        try {
+            //Got user passed array
+            val progressBackgroundWidth = attrArray.getResourceId(R.styleable.ArcSeekBar_progressBackgroundWidth, 0)
+            Log.d(TAG, "applyAttribute: progressBackgroundWidth => $progressBackgroundWidth")
+            
+            progressGradientId = attrArray.getResourceId(R.styleable.ArcSeekBar_progressGradient, 0)
+
+            Log.d(TAG, "progressGradientId: $progressGradientId")
+            if (progressGradientId != 0) {
+                progressGradientArray = resources.getIntArray(progressGradientId)
+            }
+            Log.d(TAG, "progressGradientArray: $progressGradientArray")
+//            sbImgRotation.setProgressGradient(progressGradientArray)
+        } finally {
+            attrArray.recycle()
+        }
     }
 
     private fun initProgressBarListener() {
@@ -58,7 +82,6 @@ class Rotate360SeekBarView : FrameLayout {
 
             sbImgRotation.onProgressChangedListener = object : ProgressListener {
                 override fun invoke(progress: Int) {
-                    Log.d(TAG, "invoke: $progress")
                     if (progress < productImageList.size) {
                         productImageView?.loadImageType(productImageList[progress])
                     }
@@ -66,10 +89,16 @@ class Rotate360SeekBarView : FrameLayout {
             }
 
             //For Gradient Progressbar
-            val intArray = resources.getIntArray(R.array.progressGradientColors)
-            sbImgRotation.setProgressGradient(intArray)
+//            val intArray = resources.getIntArray(R.array.progressGradientColors)
+//            sbImgRotation.setProgressGradient(progressGradientArray)
         }
     }
+
+//    fun setProgressGradientArray(progressGradientArray : IntArray){
+//        this.progressGradientArray = progressGradientArray
+//
+//        invalidate()
+//    }
 
     /**
      * to get list of images here in the custom view
@@ -90,8 +119,10 @@ class Rotate360SeekBarView : FrameLayout {
 
     private fun setUpProgressBar(progressBarMax: Int) {
         productSeekBar?.apply {
-            Log.d(TAG, "setUpProgressBar: $progressBarMax")
             sbImgRotation.maxProgress = progressBarMax
+            sbImgRotation.setProgressGradient(progressGradientArray)
+            Log.d(TAG, "setUpProgressBar: $progressGradientId")
+            Log.d(TAG, "setUpProgressBar: $progressGradientArray")
         }
         initProgressBarListener()
     }

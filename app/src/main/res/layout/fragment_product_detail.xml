@@ -38,21 +38,7 @@
             <com.example.product360view.presentation.productDetail.Rotate360SeekBarView
                 android:id="@+id/customSeekBar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:circle_progress_color="@color/mirage"
-                app:circle_stroke_width="@dimen/dp_4"
-                app:circle_x_radius="@dimen/dp_250"
-                app:circle_y_radius="@dimen/dp_150"
-                app:end_angle="180"
-                app:maintain_equal_circle="false"
-                app:move_outside_circle="false"
-                app:pointer_alpha_ontouch="255"
-                app:pointer_color="@color/mirage"
-                app:pointer_halo_border_width="@dimen/dp_5"
-                app:pointer_halo_color="@color/mirage_less_opacity"
-                app:pointer_halo_width="@dimen/dp_0"
-                app:start_angle="0"
-                app:use_custom_radii="true" />
+                android:layout_height="wrap_content" />
 
             <View
                 android:layout_width="match_parent"
